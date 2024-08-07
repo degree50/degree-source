@@ -1,0 +1,113 @@
+.video-editor__video-codes {
+    padding-left: 0;
+
+    list-style: none;
+}
+
+.video-code,
+.video-code__empty-message {
+    padding: $theme__spacing--small $theme__spacing--base;
+
+    &:focus,
+    &:focus-within {
+        outline: 2px solid $theme__color__grey--dark;
+        outline-offset: 2px;
+    }
+
+    .video-editor__video-codes {
+        display: flex;
+    }
+
+    .new-video-code {
+        display: flex;
+        padding: $theme__spacing--small $theme__spacing--base;
+
+        &:focus,
+        &:focus-within {
+            outline: 2px solid $theme__color__grey--dark;
+            outline-offset: 2px;
+        }
+
+        input {
+            background-color: $theme__color__white;
+        }
+    }
+    .video-editor__video-codes {
+        display: block;
+        margin-top: $theme__spacing--small;
+    }
+}
+
+.video-code__empty-message {
+    background-color: $theme__color__grey--light;
+}
+
+.video-code__child-count {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    right: -5px;
+    bottom: -5px;
+    min-width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    background: $theme__color__grey--light;
+    color: $theme__color__grey;
+    font-size: 0.8rem;
+}
+
+.video-code__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $theme__spacing--small;
+    margin-bottom: $theme__spacing--small;
+
+    button,
+    .button {
+        white-space: nowrap;
+    }
+}
+
+.video-code__locked {
+    padding: 5px;
+
+    color: $theme__color__primary;
+}
+
+.video-code__color {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    &:focus-within {
+        outline: 2px solid $theme__color__grey--dark;
+        outline-offset: 2px;
+    }
+}
+
+.video-code__name {
+    display: inline-block;
+    margin-right: auto;
+    width: 85%;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.new-video-code {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0 5px 10px;
+
+    input {
+        margin-right: 10px;
+
+        background-color: transparent;
+    }
+}

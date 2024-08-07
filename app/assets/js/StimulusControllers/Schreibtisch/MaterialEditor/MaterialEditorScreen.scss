@@ -1,0 +1,19 @@
+.material-editor__wrapper {
+    box-sizing: border-box;
+    height: 100%;
+
+    .material-editor .ck-editor {
+        padding-bottom: $theme__spacing--base;
+    }
+
+    .material-editor__footer {
+        flex: 0 0 auto;
+        height: $theme__spacing__huge;
+        width: 100%;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

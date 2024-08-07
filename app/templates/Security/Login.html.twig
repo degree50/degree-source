@@ -1,0 +1,113 @@
+{% extends 'BaseNoHeader.html.twig' %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block title %}{{ "common.degree"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <form method="post" class="login-form" role="form">
+            <img src="{{ asset('build/images/logo.svg') }}" alt="{{ "common.logoAltText"|trans({}, 'DegreeBase') }}" />
+            <h1 class="h1 mb-3 font-weight-normal login-form__headline">Video-Lernplattform {{ "common.degree"|trans({}, 'DegreeBase') }}</h1>
+
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                    <br/>
+                    <br/>
+                    <a href="{{ path('app_forgot_password_request') }}" class="alert-link">
+                        {{ "flash-message.forgot-password"|trans({}, 'UserPasswordReset') }}
+                    </a>
+                </div>
+            {% endif %}
+
+            <br/>
+            <a
+                class="button button--size-large button--type-primary button--block"
+                role="link"
+                href="{{ path('saml_login') }}"
+                aria-label="Klicken, um dich mit deinem Uni-Account (SSO) einzuloggen."
+            >
+                {{ "security.login.login-sso"|trans({}, 'DegreeBase') }}
+            </a>
+
+            <br />
+            <hr role="presentation"/>
+            <br />
+
+            <div class="form-group">
+                <label for="inputEmail">{{ "security.login.labels.email"|trans({}, 'DegreeBase') }}</label>
+                <input
+                    type="email"
+                    value="{{ last_username }}"
+                    name="email" id="inputEmail"
+                    class="form-control"
+                    aria-labelledby="inputEmail"
+                    autocomplete="username"
+                    required
+                    autofocus
+                >
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">{{ "security.login.labels.password"|trans({}, 'DegreeBase') }}</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="inputPassword"
+                    class="form-control"
+                    aria-labelledby="inputPassword"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+            <button
+                class="button button--size-large button--type-outline-primary button--block"
+                type="submit"
+                role="button"
+            >
+                {{ "security.login.login-directly"|trans({}, 'DegreeBase') }}
+            </button>
+            <hr role="presentation"/>
+            <div class="login-form__register">
+                <a href="{{ path('app_register') }}">{{ 'security.login.register'|trans({}, 'DegreeBase') }}</a>
+            </div>
+        </form>
+    </div>
+    <footer class="footer footer--center">
+        {{ include('Version.html.twig') }}
+        <a class="button button--type-link" href="{{ path('imprint') }}" role="link">{{ "common.imprint"|trans({}, 'DegreeBase') }}</a>
+        <a class="button button--type-link" href="{{ path('data-privacy') }}" role="link">{{ "common.dataPrivacy"|trans({}, 'DegreeBase') }}</a>
+        <a class="button button--type-link" href="{{ path('terms-of-use') }}" role="link">{{ "common.termsOfUse"|trans({}, 'DegreeBase') }}</a>
+    </footer>
+
+    {# show notification when browser is out of date (https://browser-update.org/) #}
+    <script>
+        const $buoop = {
+            {# browser: required version (0 is latest) #}
+            required: {
+                e: 0,
+                f: 0,
+                o: 0,
+                s: 0,
+                c: 0
+            },
+            {# test for insecure browsers #}
+            insecure: true,
+            api: 2024.03,
+            nostatistics: true,
+            shift_page_down: false,
+            {# test the notification - even if browser is up-to-date #}
+            {# test: true, #}
+        };
+        function $buo_f(){
+            const e = document.createElement("script");
+            e.src = "//browser-update.org/update.min.js";
+            document.body.appendChild(e);
+        }
+        try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+        catch(e){window.attachEvent("onload", $buo_f)}
+    </script>
+{% endblock %}

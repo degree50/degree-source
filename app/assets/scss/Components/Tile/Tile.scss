@@ -1,0 +1,157 @@
+$tileHeight: 200px;
+$tileHeight--small: 150px;
+
+.tile {
+    flex-grow: 0;
+    padding: 0;
+    position: relative;
+
+    input[type='checkbox'] {
+        display: none;
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:focus .tile__content,
+    &:focus-within .tile__content {
+        outline: 2px solid $theme__color__grey--dark;
+        outline-offset: 2px;
+    }
+
+    &:hover,
+    &:active,
+    &--active,
+    &:focus,
+    &:focus-within {
+        .tile__content {
+            background-color: $theme__color__primary;
+            border-color: $theme__color__primary;
+
+            color: $theme__color__white;
+        }
+
+        .tile__extension {
+            border-color: $theme__color__primary;
+        }
+    }
+
+    &--disabled {
+        opacity: 0.5;
+
+        .tile__content {
+            cursor: default;
+            border-color: $theme__color__grey--light;
+
+            &:hover {
+                border-color: $theme__color__grey--light;
+            }
+
+            &:active {
+                border-color: $theme__color__grey--light !important;
+            }
+        }
+    }
+
+    &--with-extension {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+
+        .tile__content {
+            cursor: default;
+        }
+
+        &:focus-within {
+            .tile__content {
+                border-color: $theme__color__primary--dark;
+                color: $theme__color__white;
+            }
+        }
+    }
+
+    &--small {
+        .tile__content {
+            width: $tileHeight--small;
+        }
+    }
+
+    &--status-0 {
+        .tile__content {
+            border-style: dashed;
+        }
+    }
+}
+
+.tile__content {
+    width: $tileHeight;
+    display: block;
+    margin: 0;
+    padding: 10px;
+
+    text-align: center;
+    cursor: pointer;
+
+    border: 1px solid $theme__color__primary;
+}
+
+.tile__title {
+    display: inline-block;
+    width: 100%;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    overflow: hidden;
+}
+
+.tile__date {
+    display: inline-block;
+    width: 100%;
+
+    text-align: left;
+    font-size: $base__fontSize--tiny;
+}
+
+.tile__icon {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    font-size: 4em;
+}
+
+.tile__image {
+    height: $tileHeight * 0.6;
+    width: 100%;
+    margin-bottom: $theme__spacing--small;
+    object-fit: cover;
+}
+
+.tile__extension {
+    position: relative;
+    height: $tileHeight;
+    width: 400px;
+    padding-bottom: 50px;
+
+    border: 1px solid $theme__color__grey;
+}
+
+.tile__extension-content {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+
+    overflow-y: scroll;
+}
+
+.tile__extension-actions {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    padding: 5px;
+
+    text-align: right;
+}

@@ -1,0 +1,76 @@
+{% extends 'BaseFullscreen.html.twig' %}
+
+{% block title %}{{ "video.upload.title"|trans({}, 'DegreeBase') }}{% endblock %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="content-header content-header--center">
+            <h3>{{ "video.upload.title"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+        <div class="dropzone" data-controller="videoUpload"
+             data-videoUpload-endpoint="{{ oneup_uploader_endpoint('uploaded_videos') }}"
+             data-videoUpload-remove-endpoint="{{ path('mediathek__video--delete-ajax', {id: uuid}) }}"
+             data-videoUpload-id="{{ uuid }}"
+             data-videoUpload-label="{{ "video.upload.uploadVideo"|trans({}, 'DegreeBase') }}">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <span class="form-text text-muted">
+            <strong>{{ "video.upload.supportedFormats"|trans({}, 'DegreeBase') }}</strong> {{ "video.upload.videoFormats"|trans({}, 'DegreeBase') }} <br/>
+            <strong>{{ "common.hint"|trans({}, 'DegreeBase') }}:</strong> {{ "video.upload.timeoutHint"|trans({}, 'DegreeBase') }}
+        </span>
+    </div>
+    <div class="container">
+        <header class="content-header content-header--center">
+            <h3>{{ "video.upload.subtitleUploadTitle"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+        <div class="dropzone" data-controller="subtitleUpload"
+             data-subtitleUpload-endpoint="{{ oneup_uploader_endpoint('uploaded_subtitles') }}"
+             data-subtitleUpload-remove-endpoint="{{ path('mediathek__subtitle--delete-ajax', {id: uuid}) }}"
+             data-subtitleUpload-video-id="{{ uuid }}"
+             data-subtitleUpload-label="{{ "video.upload.uploadSubtitle"|trans({}, 'DegreeBase') }}">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <span class="form-text text-muted">
+            <strong>{{ "video.upload.supportedFormats"|trans({}, 'DegreeBase') }}</strong> {{ "video.upload.subtitlesFormats"|trans({}, 'DegreeBase') }} <br/>
+            <strong>{{ "common.hint"|trans({}, 'DegreeBase') }}:</strong> {{ "video.upload.subtitlesOptional"|trans({}, 'DegreeBase') }} <br />
+        </span>
+    </div>
+    <div class="container">
+        <header class="content-header content-header--center">
+            <h3>{{ "video.upload.audioDescriptionUploadTitle"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+        <div class="dropzone" data-controller="audioDescriptionUpload"
+             data-audioDescriptionUpload-endpoint="{{ oneup_uploader_endpoint('uploaded_audio_descriptions') }}"
+             data-audioDescriptionUpload-remove-endpoint="{{ path('mediathek__audio_description--delete-ajax', {id: uuid}) }}"
+             data-audioDescriptionUpload-video-id="{{ uuid }}"
+             data-audioDescriptionUpload-label="{{ "video.upload.uploadAudioDescription"|trans({}, 'DegreeBase') }}">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <span class="form-text text-muted">
+            <strong>{{ "video.upload.supportedFormats"|trans({}, 'DegreeBase') }}</strong> {{ "video.upload.audioDescriptionFormats"|trans({}, 'DegreeBase') }} <br/>
+            <strong>{{ "common.hint"|trans({}, 'DegreeBase') }}:</strong> {{ "video.upload.audioDescriptionOptional"|trans({}, 'DegreeBase') }} <br />
+        </span>
+    </div>
+
+    {{ form_start(form) }}
+        <div class="container">
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.personalNotes) }}
+            {{ form_row(form.courses) }}
+            <div class="form__data-privacy">
+                {{ form_row(form.dataPrivacyAccepted) }}
+                {{ form_row(form.dataPrivacyPermissionsAccepted) }}
+                <a href="{{ path('data-privacy') }}" target="_blank">{{ "common.dataPrivacy"|trans({}, 'DegreeBase') }}</a> | <a href="{{ path('terms-of-use') }}" target="_blank">{{ "common.termsOfUse"|trans({}, 'DegreeBase') }}</a>
+            </div>
+        </div>
+        <footer class="footer">
+            <a class="button button--type-outline-primary footer__left"
+               href="{{ path('mediathek--index') }}">{{ "video.upload.back"|trans({}, 'DegreeBase') }}</a>
+            <div class="footer__right">
+                {{ form_row(form.save) }}
+            </div>
+        </footer>
+    {{ form_end(form) }}
+{% endblock %}

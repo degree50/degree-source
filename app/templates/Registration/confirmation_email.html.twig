@@ -1,0 +1,9 @@
+{% trans_default_domain 'UserRegistration' %}
+
+<h1>{{ "email.title"|trans }}</h1>
+
+<p>{{ "email.body"|trans }}</p>
+<p><a href="{{ signedUrl }}">{{ "email.link"|trans }}</a>.</p>
+<p>{{ "email.link-expiration"|trans({'expireTime': expireTime}) }}</p>
+<br/>
+<p>{{ "email.no-reply-notice"|trans }}</p>

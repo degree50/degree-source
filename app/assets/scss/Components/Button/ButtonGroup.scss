@@ -1,0 +1,10 @@
+.button-group {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+    gap: $theme__spacing--base;
+}
+
+.button-group .dropdown {
+    display: flex;
+}

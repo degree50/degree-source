@@ -1,0 +1,42 @@
+{% extends 'BaseFullscreen.html.twig' %}
+
+{% block title %}{{ "exercise.edit.title"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('exercise-overview', {id: exercise.course.id}) }}">
+                        {{ exercise.course.name }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ exercise.name }}</li>
+            </ol>
+        </nav>
+
+        <header class="content-header">
+            <h3>{{ "exercise.copy.title"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+        <div class="exercise-form">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.copyPhases) }}
+            {{ form_row(form.course) }}
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="button-group footer__left">
+            <a class="button button--type-outline-primary"
+               href="{{ path('exercise-overview', {id: exercise.course.id}) }}">{{ "exercise.new.back"|trans({}, 'DegreeBase') }}
+            </a>
+        </div>
+        <div class="footer__right">
+            {{ form_row(form.save) }}
+        </div>
+    </footer>
+    {{ form_end(form) }}
+
+{% endblock %}

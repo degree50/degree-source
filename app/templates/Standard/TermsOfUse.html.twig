@@ -1,0 +1,12 @@
+{% extends 'BaseNoHeader.html.twig' %}
+
+{% block title %}{{ "common.termsOfUse"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="content-header">
+            <h1>{{ "security.termsOfUse.headline"|trans({}, 'DegreeBase') }}</h1>
+        </header>
+        {{ include('Partials/TermsOfUseContent.html.twig') }}
+    </div>
+{% endblock %}

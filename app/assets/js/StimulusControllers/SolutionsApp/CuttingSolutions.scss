@@ -1,0 +1,27 @@
+.cutting-solutions {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+
+    margin: 10px 0;
+    padding: 10px;
+
+    width: 100%;
+    height: 300px;
+
+    overflow: auto;
+}
+
+.cutting-solution {
+    margin-bottom: 20px;
+    width: 430px;
+    height: 100%;
+
+    & + & {
+        margin-left: $theme__spacing--base;
+    }
+
+    & h5 {
+        margin-bottom: 15px;
+    }
+}

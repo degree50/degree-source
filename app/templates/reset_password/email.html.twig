@@ -1,0 +1,12 @@
+{% trans_default_domain 'UserPasswordReset' %}
+
+<h1>{{ "email.title"|trans }}</h1>
+
+<p>{{ "email.body"|trans }}</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ "email.link"|trans }}</a>
+
+<p>{{ "email.link-expiration"|trans({'expirationTime': expirationTime}) }}</p>
+
+<p>{{ "email.info"|trans }}</p>
+<p>{{ "email.no-reply-notice"|trans }}</p>

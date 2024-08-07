@@ -1,0 +1,12 @@
+{% extends 'BaseNoHeader.html.twig' %}
+
+{% block title %}{{ "common.imprint"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="content-header">
+            <h1>{{ "security.imprint.headline"|trans({}, 'DegreeBase') }}</h1>
+        </header>
+        {{ include('Partials/ImprintContent.html.twig') }}
+    </div>
+{% endblock %}

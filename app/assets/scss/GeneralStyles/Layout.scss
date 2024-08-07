@@ -1,0 +1,161 @@
+@import 'Mixins';
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+.main {
+    height: 100%;
+    width: 100vw;
+
+    &--with-header {
+        padding-top: 50px;
+    }
+
+    &--with-footer {
+        padding-bottom: 57px;
+    }
+
+    &--without-scrollbar {
+        .main-inner {
+            overflow-y: hidden;
+        }
+
+        .content-with-sidebar {
+            overflow-y: hidden;
+        }
+    }
+
+    &--no-padding {
+        .content-with-sidebar {
+            padding: 0;
+        }
+    }
+}
+
+.main.solution-fullscreen {
+    height: 100vh;
+
+    @supports (height: 100dvh) {
+        height: 100dvh;
+    }
+
+    &--test-mode .exercise-phase {
+        padding: 5px;
+
+        background-image: linear-gradient(
+            125deg,
+            $theme__color__primary 25%,
+            $theme__color__white 25%,
+            $theme__color__white 50%,
+            $theme__color__primary 50%,
+            $theme__color__primary 75%,
+            $theme__color__white 75%,
+            $theme__color__white 100%
+        );
+        background-size: 24.42px 34.87px;
+
+        .loading-screen {
+            background-color: $theme__color__white;
+        }
+    }
+}
+
+.main-inner {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    > .container,
+    > form {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
+
+.content-with-sidebar {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    padding-left: 320px;
+
+    overflow-y: scroll;
+    @include transition(padding-left 250ms ease);
+}
+
+.highlight-focus-within {
+    &:hover {
+        color: $theme__color__white;
+        background-color: $theme__color__primary--dark;
+    }
+
+    &:focus-within,
+    &:focus {
+        color: $theme__color__white;
+        background-color: $theme__color__secondary--dark;
+    }
+
+    &:active {
+        color: $theme__color__white;
+        background-color: $theme__color__grey--dark;
+    }
+
+    &--active {
+        color: $theme__color__white;
+        background-color: $theme__color__primary;
+    }
+
+    // force overwrite a tag styling
+    &:hover,
+    &:focus-within,
+    &:focus,
+    &--active,
+    &:active {
+        a {
+            color: $theme__color__white !important;
+        }
+    }
+}
+
+.highlight-focus-within--outline {
+    border: 2px solid transparent;
+
+    &:hover {
+        border-color: $theme__color__primary--dark;
+    }
+
+    &:focus-within,
+    &:focus {
+        border-color: $theme__color__secondary--dark;
+    }
+
+    &:active {
+        border-color: $theme__color__grey--dark;
+    }
+
+    &--active {
+        border-color: $theme__color__primary;
+    }
+}
+
+table .table-cell--no-wrap {
+    white-space: nowrap;
+}

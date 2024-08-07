@@ -1,0 +1,22 @@
+.user-expire-notice {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 10000;
+
+    padding: $theme__spacing--base;
+
+    background: $theme__color__white;
+    border-bottom: 2px solid $theme__color__primary;
+
+    > * + * {
+        margin-top: $theme__spacing--base;
+    }
+
+    .user-expire-notice--actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -1,0 +1,199 @@
+{% extends 'BaseWithSidebar.html.twig' %}
+
+{% block title %}{{ exercise.name }}{% endblock %}
+
+{% block sidebar %}
+    {{ include('Exercise/PhasesSidebar.html.twig', {sidebarItems: phases, currentItemId: exercisePhase.id, showSolution: false, testMode: testMode}) }}
+{% endblock %}
+
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block body %}
+    {% if testMode %}
+        <div class="striped-banner">
+            <span class="striped-banner__text"><i class="fa fa-exclamation-triangle"></i> {{ "exercise.labels.testInfo"|trans({}, 'DegreeBase') }}</span>
+        </div>
+    {% endif %}
+    <h2 class="text-center">{{ "common.phase"|trans({}, 'DegreeBase') }} {{ currentPhaseIndex + 1 }}: {{ exercisePhase.name }}</h2>
+    <p class="text-center"><strong>{% if exercisePhase.isGroupPhase %}In Gruppen{% else %}Alleine{% endif %}</strong></p>
+    {% if exercisePhase.dependsOnExercisePhase and exercisePhase.type.value != 'reflexion' %}
+        <p class="text-center">
+            <i class="fa fa-exclamation-triangle"></i> {{ "exercise.showPhase.dependsOnPreviousPhaseInfo"|trans({}, 'DegreeBase') }}
+        </p>
+    {% endif %}
+    <p class="text-center text-small">
+        {{ exercisePhase.task | raw }}
+    </p>
+
+    {% if exercisePhase.isGroupPhase %}
+        <hr role="presentation"/>
+        <h4>{{ "exercise.showPhase.existingGroups"|trans({}, 'DegreeBase') }}</h4>
+        <p>{{ "exercise.showPhase.existingGroupsInfo"|trans({}, 'DegreeBase') }}</p>
+
+        <div class="row">
+            <div class="col-3">
+                {% if is_granted('exercisePhase_createTeam', exercisePhase) %}
+                    <a class="tile" href="{{ path((testMode) ? 'exercise-phase-team__test-new' :'exercise-phase-team__new', {id: exercisePhase.id}) }}" data-test-id="createGroupButton">
+                        <div class="tile__content">
+                            <i class="tile__icon fas fa-plus-circle"></i>
+                            <span>{{ "exercise.showPhase.newGroup"|trans({}, 'DegreeBase') }}</span>
+                        </div>
+                    </a>
+                {% else %}
+                    <div class="tile tile--disabled">
+                        <div class="tile__content">
+                            <i class="tile__icon fas fa-plus-circle"></i>
+                            <span>{{ "exercise.showPhase.newGroup"|trans({}, 'DegreeBase') }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-9">
+                <div class="tiles">
+                    {% for team in teams %}
+                        <div tabindex="0" class="tile tile--with-extension tile--active">
+                            <div class="tile__content">
+                                <i class="tile__icon fas fa-users"></i>
+                                <span>{{ "exercise.showPhase.groupOf"|trans({}, 'DegreeBase') }} {{ team.creator.username }}</span>
+                            </div>
+                            <div class="tile__extension">
+                                <div class="tile__extension-content">
+                                    <strong>{{ "exercise.showPhase.groupMembers"|trans({}, 'DegreeBase') }}:</strong> <br/>
+                                    {% for member in team.members %}
+                                        {{ member.username }} <br/>
+                                    {% endfor %}
+                                </div>
+                                <div class="tile__extension-actions">
+                                    {% if testMode %}
+                                        <a
+                                            class="button button--size-small button--type-outline-primary"
+                                            href="{{ path('exercise-phase__reset-test', { 'id':exercisePhase.id, 'team_id': teamOfCurrentUser.id }) }}"
+                                        >
+                                            {{ "exercisePhase.test.reset"|trans({}, 'DegreeBase') }}
+                                        </a>
+                                    {% else %}
+                                        {% if is_granted('exercisePhaseTeam_join', team) %}
+                                            <a
+                                                class="button button--type-primary button--size-small"
+                                                href="{{ path('exercise-phase-team__join', { 'id':exercisePhase.id, 'team_id': team.id }) }}"
+                                            >
+                                                {{ "exercise.showPhase.joinGroup"|trans({}, 'DegreeBase') }}
+                                            </a>
+                                        {% endif %}
+                                        {% if is_granted('exercisePhaseTeam_leave', team) %}
+                                            <a
+                                                class="button button--type-outline-primary button--size-small"
+                                                href="{{ path('exercise-phase-team__leave', { 'id':exercisePhase.id, 'team_id': team.id }) }}"
+                                            >
+                                                {{ "exercise.showPhase.leaveGroup"|trans({}, 'DegreeBase') }}
+                                            </a>
+                                        {% endif %}
+                                        {% if is_granted('exercisePhaseTeam_delete', team) %}
+                                            <a
+                                                class="button button--type-danger button--size-small"
+                                                href="{{ path('exercise-phase-team__delete', { 'id':exercisePhase.id, 'team_id': team.id }) }}"
+                                            >
+                                                {{ "exercise.showPhase.deleteGroup"|trans({}, 'DegreeBase') }}
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if is_granted('exercisePhaseTeam_show', team) %}
+                                        <a
+                                            class="button button--type-primary button--size-small"
+                                            href="{{ path('exercise-phase__show', { 'id':exercisePhase.id, 'team_id': team.id }) }}"
+                                            data-test-id="startPhaseButtonGroup"
+                                        >
+                                            <i class="fas fa-play"></i> {{ "exercise.showPhase.startPhase"|trans({}, 'DegreeBase') }}
+                                        </a>
+                                    {% else %}
+                                        {% if is_granted('exercisePhase_viewOtherSolutions', exercisePhase) %}
+                                            <a class="button button--type-outline-primary button--size-small"
+                                               href="{{ path('exercise-phase__show', { 'id':exercisePhase.id, 'team_id': team.id, 'showSolution': true }) }}"
+                                            >
+                                                {{ "exercise.showPhase.myResult"|trans({}, 'DegreeBase') }}
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center">
+            {% if teamOfCurrentUser %}
+                <a
+                    class="button button--size-large button--type-primary"
+                    href="{{ path((testMode) ? 'exercise-phase__test' : 'exercise-phase__show' , { 'id':exercisePhase.id, 'team_id': teamOfCurrentUser.id }) }}"
+                >
+                    {{ "exercise.showPhase.myResult"|trans({}, 'DegreeBase') }}
+                </a>
+            {% else %}
+                {% if is_granted('exercisePhase_createTeam', exercisePhase) or testMode %}
+                    <a
+                        class="button button--size-large button--type-primary"
+                        href="{{ path((testMode) ? 'exercise-phase-team__test-new' : 'exercise-phase-team__new', {id: exercisePhase.id}) }}"
+                        data-test-id="startPhaseButtonSingle"
+                    >
+                        <i class="fas fa-play"></i>
+                        {{ "exercise.showPhase.startPhase"|trans({}, 'DegreeBase') }}
+                    </a>
+                {% endif %}
+            {% endif %}
+            {% if testMode and teamOfCurrentUser %}
+                <a
+                    class="button button--size-large button--type-outline-primary"
+                    href="{{ path('exercise-phase__reset-test', { 'id':exercisePhase.id, 'team_id': teamOfCurrentUser.id }) }}"
+                >
+                    {{ "exercisePhase.test.reset"|trans({}, 'DegreeBase') }}
+                </a>
+            {% endif %}
+        </div>
+
+        <hr role="presentation"/>
+
+        <h5>{{ "exercise.showPhase.existingResults"|trans({}, 'DegreeBase') }}</h5>
+        {% if otherTeams %}
+            <table class="table table-sm">
+                <thead class="thead-light">
+                <tr>
+                    <th>{{ "common.name"|trans({}, 'DegreeBase') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for team in otherTeams %}
+                    <tr>
+                        <td>{{ team.creator.username }}</td>
+                        <td>
+                            {% if is_granted('exercisePhase_viewOtherSolutions', exercisePhase) %}
+                                <a href="{{ path('exercise-phase__show-other-solution', { 'id':exercisePhase.id, 'team_id': team.id }) }}">
+                                    {{ "exercise.showPhase.showResult"|trans({}, 'DegreeBase') }}
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            {{ "exercise.showPhase.nothing"|trans({}, 'DegreeBase') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    {{ include('Exercise/Footer.html.twig', {
+        exercise: exercise,
+        exercisePhase: exercisePhase,
+        showPhasesProgression: true,
+        currentPhaseIndex: currentPhaseIndex,
+        amountOfPhases: amountOfPhases,
+        previousExercisePhase: previousExercisePhase,
+        nextExercisePhase: nextExercisePhase,
+        testMode: testMode
+    }) }}
+{% endblock %}

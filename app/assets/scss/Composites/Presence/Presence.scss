@@ -1,0 +1,55 @@
+$header__height: 40px;
+
+.presence {
+    width: 100%;
+}
+
+.presence__header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: $header__height;
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid $theme__color__primary;
+
+    font-weight: $theme__bold__fontWeight;
+}
+
+.presence__team-members {
+    ul {
+        @include removeListStyles();
+    }
+}
+
+.presence__team-member {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $theme__spacing--base;
+
+    &--connected {
+        i.presence__connection-state {
+            color: $theme__color__primary;
+        }
+    }
+
+    &--disconnected {
+        i.presence__connection-state {
+            color: $theme__color__red;
+        }
+    }
+
+    &:focus-within {
+        color: $theme__color__white;
+        background-color: $theme__color__secondary--dark;
+    }
+}
+
+.presence__team-member-role {
+    display: inline-block;
+    width: 20px;
+
+    text-align: center;
+}

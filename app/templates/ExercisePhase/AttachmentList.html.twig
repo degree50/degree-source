@@ -1,0 +1,19 @@
+<ul class="attachment-list">
+    {% for attachment in attachmentList %}
+        <li>
+            <a class="attachment-list__name" href="{{ path('exercise-overview__attachment--download', {id: attachment.id}) }}" target="_blank">{{ attachment.name }}</a>
+            <a
+                class="button button--size-small button--type-danger"
+                data-controller="deleteEntity"
+                data-filename="{{ attachment.name }}"
+                href="{{ path('exercise-overview__attachment--delete', {id: attachment.id}) }}"
+            >
+                <i class="fas fa-trash-alt"></i> {{ "exercisePhase.edit.deleteAttachment"|trans({}, 'DegreeBase') }}
+            </a>
+        </li>
+    {% else %}
+        <li>
+            {{ "exercisePhase.edit.noAttachments"|trans({}, 'DegreeBase') }}
+        </li>
+    {% endfor %}
+</ul>

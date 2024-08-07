@@ -1,0 +1,61 @@
+{% use 'bootstrap_4_layout.html.twig' %}
+{% extends '@!VichUploader/Form/fields.html.twig' %}
+
+{# ... override only the blocks you are interested in #}
+
+{% block submit_widget %}
+    {{ parent() }}
+{% endblock %}
+
+{% block video_entity_widget %}
+    {%- set options = choices -%}
+    <div class="tiles">
+        {% for group_label, choice in options %}
+            {{- block('video_checkbox') -}}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block vich_file_widget %}
+    <div class="vich-file">
+        {{ form_widget(form.file) }}
+        {% if form.delete is defined %}
+            {{ form_row(form.delete) }}
+        {% endif %}
+
+        {% if download_uri %}
+            <a class="button button--type-outline-primary button--size-small"
+               href="{{ download_uri }}">{{ translation_domain is same as(false) ? download_label : download_label|trans({}, translation_domain) }}</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block video_checkbox %}
+    <div tabindex="0" class="video-checkbox" title="{{ choice.data.description }}">
+        <input id="{{ choice.value }}" value="{{ choice.value }}"
+               name="{{ full_name }}[]"
+               {% if choice is selectedchoice(value) %} checked="checked"{% endif %}
+               {% if disabled %} disabled {% endif %}
+               type="checkbox"/>
+        <label for="{{ choice.value }}" class="video-checkbox__label">
+            <img class="video-checkbox__image" alt="{{ choice.data.title }}" src="{{ choice.data.encodedVideoDirectory | virtualized_file_url }}/thumbnail.jpg" />
+            <span class="tile__date">{{ "video.labels.created"|trans({}, 'DegreeBase') }}: {{ choice.data.createdAt|date("d.m.Y") }}</span>
+            <span class="tile__title">{{ choice.data.title }}</span>
+        </label>
+    </div>
+{% endblock %}
+
+{% block toggleable_button_checkbox_widget %}
+    <div class="button-checkbox">
+        <input
+            id="{{ id }}"
+            type="checkbox"
+            {{ block('widget_attributes') }}
+            {% if value is defined %} value="{{ value }}"{% endif %}
+            {% if checked %} checked="checked"{% endif %}
+        />
+        <label class="button button--type-outline-primary {% if disabled %}disabled{% endif %}" for="{{ id }}">
+            <i class="fas fa-times"></i><i class="fas fa-check"></i> {{- label|trans(label_translation_parameters, translation_domain) -}}
+        </label>
+    </div>
+{% endblock %}

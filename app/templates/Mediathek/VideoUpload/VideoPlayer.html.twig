@@ -1,0 +1,27 @@
+{% extends 'Base.html.twig' %}
+
+{% block title %}{{ "video.show.title"|trans({}, 'DegreeBase') }} - {{ video.title }}{% endblock %}
+
+{% block body %}
+    <h2>{{ video.title }}</h2>
+    <p>
+        {{ video.description }}
+    </p>
+    {% if video.encodingStatus == 1 %}
+        {% if video.courses | length == 0 %}
+            <div class="alert alert-warning">
+                {{ "video.show.notAssigned"|trans({}, 'DegreeBase') }}
+            </div>
+        {% endif %}
+
+        <div data-controller="react" data-react-widget="VideoPlayer" data-react-props="{{ { 'videoJsOptions':{ 'controls': true }, videoMap: videoMap } | json_encode|e('html_attr')}}"></div>
+    {% elseif video.encodingStatus == 3 %}
+        <div class="alert alert-danger">
+            {{ "video.edit.videoEncodingFailed"|trans({}, 'DegreeBase') }}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            {{ "video.edit.isEncoding"|trans({}, 'DegreeBase') }}
+        </div>
+    {% endif %}
+{% endblock %}

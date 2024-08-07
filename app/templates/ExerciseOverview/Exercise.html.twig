@@ -1,0 +1,98 @@
+{% if is_granted('exercise_edit', exercise.exercise) %}
+    {% set statusTransVar = 'exercise.labels.status' ~ (exercise.exercise.status) %}
+    {% set statusClassVar = 'overview-item--status-' ~ (exercise.exercise.status) %}
+    <li tabindex="0" class="overview-item {{ statusClassVar }}">
+        <div class="overview-item__date">
+            <span class="sr-only">{{ "exercise.labels.createdLabel"|trans({}, 'DegreeBase') }}: </span>
+            {{ exercise.exercise.createdAt|date("d.m.Y") }}
+        </div>
+        <div class="overview-item__status">
+            <span class="sr-only">{{ "exercise.labels.statusLabel"|trans({}, 'DegreeBase') }}: {{ statusTransVar | trans({}, 'DegreeBase') }}</span>
+            {% if exercise.exercise.status == 0 %}
+                <i class="fas fa-eye-slash" aria-hidden="true" title="{{ statusTransVar | trans({}, 'DegreeBase') }}"></i>
+            {% elseif exercise.exercise.status == 1 %}
+                <i class="fas fa-check" aria-hidden="true" title="{{ statusTransVar | trans({}, 'DegreeBase') }}"></i>
+            {% else %}
+                <i class="fas fa-eye" aria-hidden="true" title="{{ statusTransVar | trans({}, 'DegreeBase') }}"></i>
+            {% endif %}
+        </div>
+        <div class="overview-item__title">
+            <span class="sr-only">{{ "exercise.labels.name"|trans({}, 'DegreeBase') }}: </span>
+            <strong>{{ exercise.exercise.name }}</strong>
+            <em>{{ exercise.exercise.phases|length }} {{ "common.phases"|trans({}, 'DegreeBase') }}</em>
+            {% if exercise.needsReview %}
+                <div>
+                    <i aria-hidden="true" class="fa-regular fa-circle-exclamation-check"></i> {{ 'exercise.labels.reviewRequired' | trans({}, 'DegreeBase') }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="overview-item__actions" aria-label="{{ "exercise.labels.actionsLabel"|trans({}, 'DegreeBase') }}">
+            <button
+                class="button button--type-link"
+                aria-label="{{ "exercise.labels.toggleActions"|trans({}, 'DegreeBase') }}"
+            >
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="overview-item__actions-dropdown">
+                    {% if is_granted('exercise_showSolution', exercise.exercise) %}
+                        <a href="{{ path('exercise__show-solutions', {id: exercise.exercise.id}) }}">
+                            <i class="fas fa-clipboard-check"></i> {{ "exercise.showSolution.title"|trans({}, 'DegreeBase') }}
+                        </a>
+                    {% endif %}
+                    {% if is_granted('exercise_test', exercise.exercise) %}
+                        <a href="{{ path('exercise__test', {id: exercise.exercise.id}) }}">
+                            <i class="fas fa-vial"></i> {{ "exercise.test.title"|trans({}, 'DegreeBase') }}
+                        </a>
+                    {% endif %}
+                    {% if is_granted('exercise_view', exercise.exercise) %}
+                        <a href="{{ path('exercise__show', {id: exercise.exercise.id}) }}">
+                            <i class="fas fa-play"></i> {{ "exercise.show.title"|trans({}, 'DegreeBase') }}
+                        </a>
+                    {% endif %}
+                    {% if is_granted('exercise_edit', exercise.exercise) %}
+                        <a href="{{ path('exercise__edit', {id: exercise.exercise.id}) }}">
+                            <i class="fas fa-pencil-alt"></i> {{ "exercise.edit.title"|trans({}, 'DegreeBase') }}
+                        </a>
+                        <a href="{{ path('exercise__copy', {id: exercise.exercise.id}) }}">
+                            <i class="fas fa-clone"></i> {{ "exercise.copy.title"|trans({}, 'DegreeBase') }}
+                        </a>
+                        <a
+                            href="{{ path('exercise__delete', {id: exercise.exercise.id}) }}"
+                            class="color-alert"
+                            onclick="return confirm('{{ "exercise.delete.confirm"|trans({}, 'DegreeBase') }}');"
+                        >
+                            <i class="fas fa-trash-alt"></i> {{ "exercise.delete.title"|trans({}, 'DegreeBase') }}
+                        </a>
+                    {% endif %}
+                </div>
+            </button>
+        </div>
+    </li>
+{% else %}
+    {% if is_granted('exercise_view', exercise.exercise) %}
+        <li class="overview-item">
+            <div class="overview-item__date" aria-label="{{ "exercise.labels.createdLabel"|trans({}, 'DegreeBase') }}: {{ exercise.exercise.createdAt|date("d.m.Y") }}">
+                {{ exercise.exercise.createdAt|date("d.m.Y") }}
+            </div>
+            {% if is_granted('exercise_isFinished', exercise.exercise) %}
+                <div class="overview-item__status" aria-label="{{ "exercise.labels.statusLabel"|trans({}, 'DegreeBase') }}: {{ "exercise.labels.statusFinished"|trans({}, 'DegreeBase') }}">
+                    <i class="fas fa-check" title="{{ "exercise.labels.statusFinished"|trans({}, 'DegreeBase') }}"></i>
+                </div>
+            {% elseif is_granted('exercise_isOpened', exercise.exercise) %}
+                <div class="overview-item__status" aria-label="{{ "exercise.labels.statusLabel"|trans({}, 'DegreeBase') }}: {{ "exercise.labels.statusStarted"|trans({}, 'DegreeBase') }}">
+                    <i class="fas fa-user-edit" title="{{ "exercise.labels.statusStarted"|trans({}, 'DegreeBase') }}"></i>
+                </div>
+            {% else %}
+                <div class="overview-item__status" aria-label="{{ "exercise.labels.statusLabel"|trans({}, 'DegreeBase') }}: {{ "exercise.labels.statusNew"|trans({}, 'DegreeBase') }}">
+                    <i class="fas fa-envelope-open-text" title="{{ "exercise.labels.statusNew"|trans({}, 'DegreeBase') }}"></i>
+                </div>
+            {% endif %}
+            <a
+                href="{{ path('exercise__show', {id: exercise.exercise.id}) }}"
+                class="overview-item__title"
+                aria-label="{{ "exercise.labels.name"|trans({}, 'DegreeBase') }}: {{ exercise.exercise.name }}"
+            >
+                {{ exercise.exercise.name }}
+            </a>
+        </li>
+    {% endif %}
+{% endif %}

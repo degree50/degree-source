@@ -1,0 +1,35 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "react-app",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:functional/external-recommended",
+        "plugin:functional/no-mutations",
+        "plugin:prettier/recommended"
+    ],
+    "plugins": ["@typescript-eslint", "prettier", "react", "react-hooks", "functional"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "project": "./tsconfig.json",
+        "tsconfigRootDir": ".",
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/prefer-readonly-parameter-types": "off",
+        "functional/prefer-readonly-type": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "ignorePatterns": ["*.js", "*.json"]
+}

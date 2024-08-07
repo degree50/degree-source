@@ -1,0 +1,31 @@
+{% extends 'BaseNoHeader.html.twig' %}
+{% trans_default_domain 'UserRegistration' %}
+
+{% block layoutCssClass %}main--with-footer{% endblock %}
+{% block title %}{{ "common.degree"|trans({}, 'DegreeBase') }} - {{ "registration.title"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="registration-form">
+            <img src="{{ asset('build/images/logo.svg') }}" alt="{{ "common.logoAltText"|trans({}, 'DegreeBase') }}" />
+            <h1 class="h1 mb-3 font-weight-normal login-form__headline">{{ "common.videoLearningPlatform"|trans({}, 'DegreeBase') }} {{ "common.degree"|trans({}, 'DegreeBase') }}</h1>
+
+            <hr role="presentation"/>
+
+            <h2 class="registration-form__headline">{{ "form.title"|trans }}</h2>
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+
+                <button type="submit" class="button button--type-primary button--block">{{ "form.submit"|trans }}</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
+    <footer class="footer footer--center">
+        {{ include('Version.html.twig') }}
+        <a class="button button--type-link" href="{{ path('imprint') }}">{{ "common.imprint"|trans({}, 'DegreeBase') }}</a>
+        <a class="button button--type-link" href="{{ path('data-privacy') }}">{{ "common.dataPrivacy"|trans({}, 'DegreeBase') }}</a>
+        <a class="button button--type-link" href="{{ path('terms-of-use') }}">{{ "common.termsOfUse"|trans({}, 'DegreeBase') }}</a>
+    </footer>
+{% endblock %}

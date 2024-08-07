@@ -1,0 +1,62 @@
+.video-player {
+    max-width: 100%;
+    width: auto;
+    max-height: 100%;
+    height: auto;
+
+    &--hidden {
+        display: none;
+    }
+
+    .video-js {
+        margin: auto;
+    }
+
+    // some styling improvements for touch to make controls bigger
+    .video-js .vjs-big-play-button {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        &:hover,
+        &:focus {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .video-js .vjs-control-bar {
+        height: 44px;
+    }
+
+    .video-js .vjs-button,
+    .video-js .vjs-remaining-time,
+    .video-js .vjs-volume-panel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .video-js .vjs-volume-panel {
+        justify-content: flex-start;
+    }
+
+    .video-js .vjs-button .vjs-icon-placeholder:before {
+        position: relative;
+    }
+
+    .vjs-menu-button-popup .vjs-menu,
+    .vjs-menu-button-popup .vjs-menu .vjs-menu-content {
+        width: auto;
+    }
+
+    .vjs-menu li {
+        padding: 0.2em 0.5em;
+    }
+
+    &__custom-control__icon.vjs-icon-placeholder {
+        &:before {
+            font-size: 1.5em;
+            line-height: 2;
+        }
+    }
+}

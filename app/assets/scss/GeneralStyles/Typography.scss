@@ -1,0 +1,69 @@
+html,
+body {
+    font-size: $base__fontSize;
+    font-family: $theme__default__fontStack;
+    font-weight: $theme__default__fontWeight;
+    line-height: $base__lineHeight;
+    color: $theme__color__text;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $theme__color__headline;
+    font-family: $theme__default__fontStack;
+    font-weight: $theme__heading__fontWeight;
+}
+
+h1 {
+    font-size: $h1__fontSize;
+    line-height: $base__heading__lineHeight;
+}
+
+h2 {
+    font-size: $h2__fontSize;
+    line-height: $base__heading__lineHeight;
+}
+
+h3 {
+    font-size: $h3__fontSize;
+    line-height: $base__heading__lineHeight;
+}
+
+h4 {
+    font-size: 24px;
+    line-height: $base__heading__lineHeight;
+}
+
+h5 {
+    font-size: 20px;
+    line-height: $base__heading__lineHeight;
+}
+
+h6 {
+    font-size: 16px;
+    line-height: $base__heading__lineHeight;
+}
+
+.color-success {
+    color: $theme__color__success;
+}
+
+.color-warning {
+    color: $theme__color__warning;
+}
+
+.color-alert {
+    color: $theme__color__error;
+}
+
+.text-small {
+    font-size: $base__fontSize--smaller;
+}
+
+.text-justified {
+    text-align: justify;
+}

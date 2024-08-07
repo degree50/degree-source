@@ -1,0 +1,31 @@
+controllers_authentications:
+    resource: ../../src/Security/Controller/
+    type: attribute
+
+controllers_schreibtisch:
+    resource: ../../src/Schreibtisch/Controller/
+    type: attribute
+
+controllers_mediathek:
+    resource: ../../src/Mediathek/Controller/
+    type: attribute
+
+controllers_data_export:
+    resource: ../../src/DataExport/Controller
+    type: attribute
+
+controllers_legal:
+    resource: ../../src/Legal/Controller/
+    type: attribute
+
+controllers_easy-admin:
+    resource: ../../src/Administration/Controller/
+    type: attribute
+    
+controllers_domain:
+    resource: ../../src/Domain/**/Controller/*
+    type: attribute
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: attribute

@@ -1,0 +1,80 @@
+{% extends 'BaseFullscreen.html.twig' %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+{% block title %}{{ "course.edit.title"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="exercise-form">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('exercise-overview', {id: course.id}) }}">
+                            {{ course.name }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active"
+                        aria-current="page">{{ "course.edit.title"|trans({}, 'DegreeBase') }}</li>
+                </ol>
+            </nav>
+            <header class="content-header">
+                <h3>{{ "course.edit.title"|trans({}, 'DegreeBase') }}</h3>
+            </header>
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.fachbereich) }}
+
+            <div class="searchable-select-field form-group" data-controller="searchableSelectField">
+                {{ form_label(form.users) }}
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fa fa-search"></i></div>
+                    </div>
+                    <input
+                        type="search"
+                        class="form-control searchable-select-field__input"
+                        aria-label="{{ "course.labels.filterTutorsAria"|trans({}, 'DegreeBase') }}"
+                        placeholder="{{ "course.labels.filterTutors"|trans({}, 'DegreeBase') }}"
+                    />
+                </div>
+                {{ form_errors(form.users) }}
+                <div class="searchable-select-field__list">
+                    {{ form_widget(form.users) }}
+                </div>
+                {{ form_help(form.users) }}
+            </div>
+
+            <h5>{{ "course.labels.currentTutors"|trans({}, 'DegreeBase') }} ({{ tutors.count }} {{ "course.labels.tutors"|trans({}, 'DegreeBase') }})</h5>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>{{ "course.labels.tutor"|trans({}, 'DegreeBase') }}</th>
+                    <th>{{ "course.labels.role"|trans({}, 'DegreeBase') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for tutor in tutors %}
+                    {% if tutor.name == 'DOZENT' %}
+                        <tr>
+                            <td>{{ tutor.user.userName }}</td>
+                            <td>{{ "course.labels.tutor"|trans({}, 'DegreeBase') }}</td>
+                            <td class="text-right">
+                                <a href="{{ path('exercise-overview__course--remove-role', {id: course.id, userRole_id: tutor.id, redirectToEdit: true}) }}"
+                                   class="button button--type-danger button--size-small">{{ "course.removeMember.title"|trans({}, 'DegreeBase') }}</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <a class="button button--type-outline-primary"
+           href="{{ path('exercise-overview', {id: course.id}) }}">{{ "course.new.back"|trans({}, 'DegreeBase') }}</a>
+        {{ form_row(form.save) }}
+    </footer>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,40 @@
+.sidebar-item {
+    @include transition(all 250ms ease);
+
+    width: 100%;
+
+    padding: $theme__spacing--small $theme__spacing--base;
+
+    i {
+        width: 24px;
+
+        text-align: center;
+    }
+
+    a {
+        display: inline-block;
+        padding: $theme__spacing--small $theme__spacing--base;
+        width: 100%;
+
+        &:focus, &:hover, &:active {
+            background-color: $theme__color__primary;
+
+            color: $theme__color__white !important;
+        }
+    }
+
+    &--active {
+        a {
+            background-color: $theme__color__primary;
+
+            color: $theme__color__white !important;
+        }
+    }
+
+    &--disabled {
+        opacity: .5;
+
+        cursor: default;
+        pointer-events: none;
+    }
+}

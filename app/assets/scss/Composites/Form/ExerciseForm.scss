@@ -1,0 +1,18 @@
+.exercise-form {
+    [contenteditable='true'] {
+        min-height: 10em;
+    }
+
+    // min height for ckeditor to avoid jumping ui
+    input[data-controller='ckeditor']:not(.ckeditor-loaded) {
+        min-height: 200px;
+    }
+}
+
+.exercise-form__table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: $theme__spacing--huge;
+    margin-bottom: $theme__spacing--base;
+}

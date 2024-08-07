@@ -1,0 +1,37 @@
+form:
+    title: 'Registrierung'
+    submit: 'Registrieren'
+    label:
+        email: 'E-Mail'
+        password: 'Passwort'
+        password-confirmation: 'Passwort wiederholen'
+    validation:
+        email-blank: 'Bitte tragen Sie eine E-Mail-Adresse ein'
+        email-invalid: 'Bitte tragen Sie eine gültige E-Mail-Adresse ein'
+        password-blank: 'Bitte tragen Sie ein Passwort ein'
+        password-confirm-blank: 'Bitte bestätigen Sie Ihr Passwort'
+        password-too-short: 'Das Passwort muss mindestens Zeichen {{ limit }} lang sein'
+        password-mismatch: 'Die Passwörter stimmen nicht überein'
+        
+email:
+    no-reply-notice: 'Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht auf diese E-Mail.'
+    subject: 'Bestätigen Sie Ihre E-Mail-Adresse'
+    title: 'Bestätigen Sie Ihre E-Mail-Adresse'
+    body: 'Bitte bestätigen Sie Ihre E-Mail-Adresse indem Sie auf den folgenden Link klicken:'
+    link: 'E-Mail-Adresse bestätigen'
+    link-expiration: 'Der Link ist für expireTime gültig.'
+
+process:
+    email-confirmation:
+        title: 'Bitte verifizieren Sie Ihre E-Mail-Adresse.'
+        body: 'Klicken Sie einfach auf den Link in der von uns versendeten E-Mail.'
+        spamInfo: 'Wenn Sie keine E-Mail erhalten haben, überprüfen Sie bitte Ihren Spam-Ordner.'
+        retryLink: 'Klicken Sie hier, um die E-Mail erneut zu senden.'
+
+flash-message:
+    registration:
+        success: 'Sie haben sich erfolgreich registriert. Bitte bestätigen Sie Ihre E-Mail-Adresse.'
+    email-confirmation:
+        resend: 'Die E-Mail wurde erneut versendet.'
+        success: 'Ihre E-Mail-Adresse wurde erfolgreich bestätigt.'
+        error: 'Die E-Mail-Adresse konnte nicht bestätigt werden. Bitte versuchen Sie es erneut.'

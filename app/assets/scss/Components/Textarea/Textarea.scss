@@ -1,0 +1,15 @@
+textarea {
+    color: $theme__color__text;
+    background-color: $theme__color__white;
+
+    border: 1px solid $theme__color__grey--dark;
+    border-radius: 2px;
+
+    &:focus {
+        border-color: $theme__color__secondary--dark;
+    }
+
+    &:hover {
+        border-color: $theme__color__primary;
+    }
+}

@@ -1,0 +1,132 @@
+.navigation {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    min-height: 46px;
+
+    background-color: $theme__color__white;
+
+    @include mq(medium) {
+        flex-wrap: wrap;
+    }
+}
+
+.navigation__brand {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    height: 46px;
+
+    img {
+        height: 40px;
+        max-width: none;
+        padding: 2px;
+    }
+}
+
+.navigation__toggler {
+    display: none;
+    padding: 0.25rem 0.75rem;
+    margin-left: auto;
+
+    background-color: transparent;
+    border: none;
+
+    font-size: 1.25rem;
+    line-height: 1;
+
+    @include mq(medium) {
+        display: block;
+    }
+}
+
+.navigation__inner {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &.collapse {
+        display: flex;
+    }
+
+    @include mq(medium) {
+        flex-grow: 1;
+        flex-basis: 100%;
+        flex-direction: column;
+
+        &.collapse:not(.show) {
+            display: none;
+        }
+    }
+}
+
+.navigation__items {
+    display: flex;
+
+    @include mq(medium) {
+        display: block;
+    }
+
+    @include removeListStyles();
+}
+
+.navigation__item {
+    display: block;
+
+    text-transform: uppercase;
+
+    a {
+        display: inline-block;
+        padding: 0.7rem 1rem;
+
+        text-decoration: none !important;
+        color: $theme__color__grey--dark;
+        font-weight: $theme__bold__fontWeight;
+
+        &:hover,
+        &:focus,
+        &:focus-within {
+            background-color: $theme__color__primary;
+
+            color: $theme__color__white;
+        }
+
+        &:focus,
+        &:focus-within {
+            outline: none !important;
+
+            span {
+                outline: 2px solid $theme__color__grey--dark;
+                outline-offset: 2px;
+
+                &:focus:not(:focus-visible) {
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    &--active a {
+        background-color: $theme__color__primary;
+
+        color: $theme__color__white;
+    }
+}
+
+.navigation__user {
+    display: block;
+    padding: 0.7rem 1rem;
+
+    @include mq(medium) {
+        border-top: 1px solid $theme__color__grey--dark;
+
+        a {
+            float: right;
+        }
+    }
+}

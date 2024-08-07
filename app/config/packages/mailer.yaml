@@ -1,0 +1,11 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        
+        envelope:
+            sender: '%env(MAILER_SENDER_ADDRESS)%'
+        headers:
+            From: '%env(MAILER_SENDER_NAME)% <%env(MAILER_SENDER_ADDRESS)%>'
+            # this non-standard header tells compliant autoresponders ("email holiday mode") to not
+            # reply to this message because it's an automated email
+            X-Auto-Response-Suppress: 'OOF, DR, RN, NRN, AutoReply'

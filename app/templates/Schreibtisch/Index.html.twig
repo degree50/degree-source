@@ -1,0 +1,16 @@
+{% extends 'Layouts/Default.html.twig' %}
+{% block title %}{{ "desk.index.title"|trans({}, 'DegreeBase') }}{% endblock %}
+{% block main %}
+    {{ include('Partials/Header.html.twig') }}
+
+    <main class="main main--with-header {% block layoutCssClass %}{% endblock %}">
+        {{ include('Partials/FlashMessages.html.twig') }}
+        <div class="main-inner">
+            <div class="schreibtisch-container" data-controller="schreibtisch">
+                <div class="loading-screen">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

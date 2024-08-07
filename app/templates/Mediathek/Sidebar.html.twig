@@ -1,0 +1,29 @@
+<a class="button button--type-primary button--block" href="{{ path('mediathek--index') }}">{{ "video.index.allVideos"|trans({}, 'DegreeBase') }}</a>
+<hr role="presentation"/>
+
+{% if sidebarItems | length == 0 %}
+    <p>{{ "exerciseOverview.index.noCourseAssigned"|trans({}, 'DegreeBase') }}</p>
+{% endif %}
+
+{% for item in sidebarItems %}
+    <div class="sidebar__group">
+        <header id="heading{{ loop.index }}">
+            <h5>
+                <button class="sidebar__group-toggle button button--type-primary" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                    {{ item.label }} <i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down"></i>
+                </button>
+            </h5>
+        </header>
+        <div id="collapse{{ loop.index }}" class="collapse show" aria-labelledby="heading{{ loop.index }}" data-parent="#sidebar">
+            <div class="sidebar__group-body">
+                <ul class="list">
+                    {% for course in item.courses %}
+                        <li class="sidebar-item {{ (currentItem != false and course.id == currentItem.id) ? 'sidebar-item--active' : '' }}">
+                            <a class="nav-link" href="{{ path('mediathek--index', {id: course.id}) }}">{{ course.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endfor %}

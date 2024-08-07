@@ -1,0 +1,252 @@
+# This means your pipeline will run:
+# - for merge requests
+# - for branch pipelines UNLESS there is an open merge requests
+# - for other branch pipelines
+# - for tag pipelines
+workflow:
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+        -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH'
+        -   if: '$CI_COMMIT_TAG'
+
+stages:
+    - compile_resources
+    - build
+    - test
+    - deploy
+
+compile_and_test_frontend:
+    stage: compile_resources
+    rules:
+        -   when: always
+    interruptible: true
+    image: node:20.12.2-bookworm-slim
+    script:
+        - yarn config set cache-folder .yarn
+        - cd app
+        # set up FontAwesomePro - CI provides $FONTAWESOME_NPM_AUTH_TOKEN (GitLab->Settings->CI/CD->Variables)
+        - npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+        - npm config set "//npm.fontawesome.com/:_authToken" $FONTAWESOME_NPM_AUTH_TOKEN
+        # install deps
+        - yarn
+        # run build
+        - yarn encore production || echo 1
+        # run tests directly after building, so we don't have to uplaod huge node_modules dir artifact
+        - yarn lint
+        - yarn test:ci
+    artifacts:
+        expire_in: 1 weeks
+        paths:
+            - app/public/build
+    cache:
+        # Cache node_modules project wide - only change when node version is changed.
+        key: "degree-frontend-node-cache_node-version-20-12-2"
+        paths:
+            - app/node_modules
+            - .yarn
+
+package_app:
+    stage: build
+    rules:
+        -   when: always
+    interruptible: true
+    image: docker:dind
+    script:
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        # Install bash to run the versioning script
+        - apk add --no-cache bash
+        # Generate VERSION file (see deployment/docker/Dockerfile)
+        - ./scripts/versioning.sh
+        # build the degree image for this commit and push it to the registry
+        - docker pull $CI_REGISTRY_IMAGE:main || true
+        - docker build --cache-from $CI_REGISTRY_IMAGE:main -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f deployment/docker/Dockerfile .
+        - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+build_e2e_testrunner:
+    stage: build
+    rules:
+        -   when: always
+    interruptible: true
+    image: docker:dind
+    script:
+        - cd e2e-testrunner
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        # build the test runner image for this commit and push it to the registry
+        - docker pull $CI_REGISTRY_IMAGE:e2e-testrunner || true
+        - docker build --cache-from $CI_REGISTRY_IMAGE:e2e-testrunner -t $CI_REGISTRY_IMAGE:e2e-testrunner .
+        - docker push $CI_REGISTRY_IMAGE:e2e-testrunner
+        - cd ..
+
+integration_test:
+    stage: test
+    rules:
+        -   when: always
+    interruptible: true
+    # we're running this job inside the production image we've just built previously
+    image:
+        name: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+        # see `scripts` below
+        entrypoint: [""]
+
+    dependencies: [] # we do not need any artifacts from prior steps
+    variables:
+        # service mariadb
+        MYSQL_DATABASE: "test_db"
+        MYSQL_ROOT_PASSWORD: "password"
+
+        # System under Test
+        APP_SECRET: test
+        APP_ENV: test
+        DATABASE_URL: mysql://root:password@mariadb/test_db
+
+        MERCURE_PUBLISH_URL: http://127.0.0.1:9090/.well-known/mercure
+        LIVE_SYNC_JWT_PRIVATE_SIGNING_KEY: changeme-test
+        JWT_KEY: changeme-test
+
+        MAILER_DSN: smtp://mailpit:1025
+        MAILER_SENDER_ADDRESS: no-reply@degree.de
+        MAILER_SENDER_NAME: 'Degree Test System'
+
+        TRUSTED_HOSTS: '^127:0:0:1|localhost|degree|degree40:tu-dortmund:de$'
+
+        SAML_BASE_URL: "https://example.com/saml/"
+        SAML_IDP_ENTITY_ID: "https://sso.example.com/openam/tudo"
+        SAML_IDP_SSO_URL: "https://sso.example.com/openam/SSOPOST/metaAlias/tudo/idp"
+        SAML_IDP_SLS_URL: "https://sso.example.com/openam/IDPSloPOST/metaAlias/tudo/idp"
+        SAML_IDP_CERT: "NOCERT"
+        SAML_SP_ENTITY_ID: "https://example.com/saml/metadata"
+        SAML_SP_ACS_URL: "https://example.com/saml/acs"
+        SAML_SP_SLS_URL: "https://example.com/saml/logout"
+        SAML_CONTACT_NAME: "Tech Contact"
+        SAML_CONTACT_EMAIL: "tech@example.com"
+    services:
+        -   name: mariadb:10.7
+        -   name: redis:6.2
+        -   name: axllent/mailpit:v1.19
+            alias: mailpit
+        # here, we make the e2e-testrunner available
+        -   name: $CI_REGISTRY_IMAGE:e2e-testrunner
+            alias: e2e-testrunner
+    script:
+        # as we need a `script` section to have a valid .gitlab-ci.yml we disabled the
+        # entrypoint and run the script here
+        - /entrypoint-integration.sh
+
+e2e_test:
+    stage: test
+    # rules:
+    # - run on merge_requests when triggered manually as part of the pipeline
+    # - always run on main branch pipelines and tag pipelines
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_OPEN_MERGE_REQUESTS'
+            when: manual
+        -   if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
+            when: always
+
+    interruptible: true
+    # we're running this job inside the production image we've just built previously
+    image:
+        name: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+        # see `scripts` below
+        entrypoint: [""]
+    variables:
+        # service mariadb
+        MYSQL_DATABASE: "test_db"
+        MYSQL_ROOT_PASSWORD: "password"
+
+        # System under Test
+        APP_SECRET: test
+        APP_ENV: test
+        DATABASE_URL: mysql://root:password@mariadb/test_db
+
+        MERCURE_PUBLISH_URL: http://127.0.0.1:9090/.well-known/mercure
+        LIVE_SYNC_JWT_PRIVATE_SIGNING_KEY: changeme-test
+        JWT_KEY: changeme-test
+
+        MAILER_DSN: smtp://mailpit:1025
+        MAILER_SENDER_ADDRESS: no-reply@degree.de
+        MAILER_SENDER_NAME: 'Degree Test System'
+
+        TRUSTED_HOSTS: '^127:0:0:1|localhost|degree|degree40:tu-dortmund:de$'
+
+        SAML_BASE_URL: "https://example.com/saml/"
+        SAML_IDP_ENTITY_ID: "https://sso.example.com/openam/tudo"
+        SAML_IDP_SSO_URL: "https://sso.example.com/openam/SSOPOST/metaAlias/tudo/idp"
+        SAML_IDP_SLS_URL: "https://sso.example.com/openam/IDPSloPOST/metaAlias/tudo/idp"
+        SAML_IDP_CERT: "NOCERT"
+        SAML_SP_ENTITY_ID: "https://example.com/saml/metadata"
+        SAML_SP_ACS_URL: "https://example.com/saml/acs"
+        SAML_SP_SLS_URL: "https://example.com/saml/logout"
+        SAML_CONTACT_NAME: "Tech Contact"
+        SAML_CONTACT_EMAIL: "tech@example.com"
+    services:
+        -   name: mariadb:10.7
+        -   name: redis:6.2
+        -   name: axllent/mailpit:v1.19
+            alias: mailpit
+        # here, we make the e2e-testrunner available
+        -   name: $CI_REGISTRY_IMAGE:e2e-testrunner
+            alias: e2e-testrunner
+    script:
+        # as we need a `script` section to have a valid .gitlab-ci.yml we disabled the
+        # entrypoint and run the script here
+        - /entrypoint-e2e.sh
+    after_script:
+        - cp -R /app/e2e-results $CI_PROJECT_DIR/e2e-results
+    artifacts:
+        expire_in: 1 weeks
+        when: always
+        paths:
+            - e2e-results
+        reports:
+            junit: e2e-results/behat.xml
+
+# Add variables $DEGREE_SERVER_URL_PRODUCTION and $DEGREE_SERVER_USER_PRODUCTION to your GitLab project's CI/CD settings.
+deploy-prod:
+    stage: deploy
+    image: docker:dind
+    rules:
+        -   if: '$CI_COMMIT_TAG'
+            when: manual
+    tags:
+        - jumphost
+    script:
+        # pull the image of this branch and tag it as "main"
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+        - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG $CI_REGISTRY_IMAGE:main
+        - docker push $CI_REGISTRY_IMAGE:main
+
+        - eval $(ssh-agent -s)
+        - chmod 600 $SSH_PRIVATE_DEPLOY_KEY
+        - ssh-add $SSH_PRIVATE_DEPLOY_KEY
+        - mkdir -p ~/.ssh
+        - ssh-keyscan -H $DEGREE_SERVER_URL_PRODUCTION >> ~/.ssh/known_hosts
+        - scp docker-compose-prod-tu-dortmund.yml $DEGREE_SERVER_USER_PRODUCTION@$DEGREE_SERVER_URL_PRODUCTION:~/docker-compose.yml
+        - ssh $DEGREE_SERVER_USER_PRODUCTION@$DEGREE_SERVER_URL_PRODUCTION "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY && docker compose pull && docker compose up -d"
+
+# Add variables $DEGREE_SERVER_URL_STAGING and $DEGREE_SERVER_USER_STAGING to your GitLab project's CI/CD settings.
+deploy-test:
+    stage: deploy
+    image: docker:dind
+    rules:
+        -   if: '$CI_COMMIT_TAG'
+            when: manual
+    tags:
+        - jumphost
+    script:
+        # pull the image of this branch and tag it as "test-stage"
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+        - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG $CI_REGISTRY_IMAGE:test-stage
+        - docker push $CI_REGISTRY_IMAGE:test-stage
+
+        - eval $(ssh-agent -s)
+        - chmod 600 $SSH_PRIVATE_DEPLOY_KEY
+        - ssh-add $SSH_PRIVATE_DEPLOY_KEY
+        - mkdir -p ~/.ssh
+        - ssh-keyscan -H $DEGREE_SERVER_URL_STAGING >> ~/.ssh/known_hosts
+        - scp docker-compose-test-tu-dortmund.yml $DEGREE_SERVER_USER_STAGING@$DEGREE_SERVER_URL_STAGING:~/docker-compose.yml
+        - ssh $DEGREE_SERVER_USER_STAGING@$DEGREE_SERVER_URL_STAGING "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY && docker compose pull && docker compose up -d"

@@ -1,0 +1,112 @@
+<div class="sidebar__group">
+    {{ _self.sidebarLink(exercise.course.name, false, '', path('exercise-overview', {id: exercise.course.id})) }}
+    {% if testMode %}
+        {{ _self.sidebarLink(exercise.name, false, '', path('exercise__test', {id: exercise.id})) }}
+    {% else %}
+        {{ _self.sidebarLink(exercise.name, false, '', path('exercise__show', {id: exercise.id})) }}
+    {% endif %}
+    <header id="heading-phases">
+        <h5>{{ "common.phases"|trans({}, 'DegreeBase') }}:</h5>
+    </header>
+    <div id="collapse-phases" class="collapse show" aria-labelledby="heading-phases" data-parent="#sidebar">
+        <div class="sidebar__group-body">
+            <ul class="list">
+                {% for item in sidebarItems %}
+                    <li
+                        class="sidebar-item {{ (item.phase.id == currentItemId) ? 'sidebar-item--active' : '' }} {{ testMode == true or is_granted('exercisePhase_viewExercisePhase', item.phase) ? "" : "sidebar-item--disabled" }}"
+                        data-test-id="exercisePhaseSidebarItem"
+                    >
+                        {% if showSolution %}
+                            {{
+                                _self.sidebarLink(
+                                    item.phase.name,
+                                    item.phase.dependsOnExercisePhase,
+                                    item.phase.isGroupPhase ? 'fas fa-users' : 'fas fa-user',
+                                    path(
+                                        'exercise__show-solutions',
+                                        {id: exercise.id, phaseId: item.phase.id}
+                                    ),
+                                    true,
+                                    item.metadata.isDone,
+                                    item.metadata.needsReview,
+                                    item.metadata.iconClass,
+                                    item.metadata.phaseTitle,
+                                )
+                            }}
+                        {% elseif testMode %}
+                            {{
+                                _self.sidebarLink(
+                                    item.phase.name,
+                                    item.phase.dependsOnExercisePhase,
+                                    item.phase.isGroupPhase ? 'fas fa-users' : 'fas fa-user',
+                                    path(
+                                        'exercise__show-test-phase',
+                                        {id: exercise.id, phaseId: item.phase.id}
+                                    ),
+                                    true,
+                                    item.metadata.isDone,
+                                    item.metadata.needsReview,
+                                    item.metadata.iconClass,
+                                    item.metadata.phaseTitle,
+                                )
+                            }}
+                        {% else %}
+                            {{
+                                _self.sidebarLink(
+                                    item.phase.name,
+                                    item.phase.dependsOnExercisePhase,
+                                    item.phase.isGroupPhase ? 'fas fa-users' : 'fas fa-user',
+                                    path(
+                                        'exercise__show-phase',
+                                        {id: exercise.id, phaseId: item.phase.id}
+                                    ),
+                                    is_granted('exercisePhase_viewExercisePhase', item.phase),
+                                    item.metadata.isDone,
+                                    item.metadata.needsReview,
+                                    item.metadata.iconClass,
+                                    item.metadata.phaseTitle,
+                                )
+                            }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+{% macro sidebarLink(
+    name,
+    dependsOnExercisePhase,
+    iconClass,
+    href,
+    canView = true,
+    isDone = false,
+    reviewRequired = false,
+    phaseIconClass = "",
+    phaseTitle = "",
+)%}
+    <a
+        class="nav-link"
+        {% if canView %} href="{{ href }}" {% endif %}
+    >
+        {% if iconClass %}
+            <i class="{{ phaseIconClass }}" title="{{ phaseTitle }}"></i>
+        {% endif %}
+        {% if iconClass %}
+            <i class="{{ iconClass }}"></i>
+        {% endif %}
+        {% if dependsOnExercisePhase %}
+            <i class="fas fa-arrow-up"
+               title="{{ "exercisePhase.labels.usesResultFrom"|trans({}, 'DegreeBase') }} '{{ dependsOnExercisePhase.name }}'"></i>
+        {% endif %}
+        {{ name }}
+        {% if reviewRequired %}
+            <i class="fa-regular fa-circle-exclamation" title="{{ 'exercise.labels.reviewRequired' | trans({}, 'DegreeBase') }}"></i>
+        {% elseif isDone %}
+            <i class="fa-regular fa-check" title="{{ 'exercise.labels.phaseDone' | trans({}, 'DegreeBase') }}"></i>
+        {% endif %}
+    </a>
+{% endmacro %}

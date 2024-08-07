@@ -1,0 +1,12 @@
+{% extends 'BaseNoHeader.html.twig' %}
+
+{% block title %}{{ "common.dataPrivacy"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="content-header">
+            <h1>{{ "common.dataPrivacy"|trans({}, 'DegreeBase') }}</h1>
+        </header>
+        {{ include('Partials/DataPrivacyContent.html.twig') }}
+    </div>
+{% endblock %}

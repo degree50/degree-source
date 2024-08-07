@@ -1,0 +1,13 @@
+{% extends 'BaseNoHeader.html.twig' %}
+{% trans_default_domain 'UserPasswordReset' %}
+
+{% block title %}{{ "common.degree"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ "process.check-email.title"|trans }}</h1>
+        <p>{{ "process.check-email.body"|trans }}</p>
+        <p>{{ "process.check-email.spam-info"|trans }}</p>
+        <p><a href="{{ path('app_forgot_password_request') }}">{{ "process.check-email.retry-link"|trans }}</a>.</p>
+    </div>
+{% endblock %}

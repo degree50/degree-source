@@ -1,0 +1,28 @@
+{% extends 'BaseNoHeader.html.twig' %}
+
+{% block title %}{{ exercisePhase.name }}{% endblock %}
+
+{% block layoutCssClass %}main--with-footer main--without-scrollbar{% endblock %}
+
+{% block body %}
+    <div
+        class="exercise-phase"
+        data-controller="exercisePhase"
+        data-exercisePhase-props="{{ {data: data, config: config, liveSyncConfig: liveSyncConfig, uploadEndpoint: oneup_uploader_endpoint('uploaded_videos')} |json_encode|e('html_attr') }}"
+    >
+        <div class="loading-screen">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+    </div>
+    <footer class="footer">
+        <a class="button button--type-outline-primary footer__left" href="{{ path('exercise__show-phase', {id: exercisePhase.belongsToExercise.id, phaseId: exercisePhase.id, showSolution: true}) }}">
+            {{ "common.back"|trans({}, 'DegreeBase') }}
+        </a>
+        <span class="footer__center">
+            {{ "common.phase"|trans({}, 'DegreeBase') }} {{ exercisePhase.sorting + 1 }}: {{ exercisePhase.name }}
+        </span>
+        <button class="button button--type-primary disabled footer__right" type="button" disabled="disabled">
+            {{ "exercisePhase.showSolution.shareResult"|trans({}, 'DegreeBase') }}
+        </button>
+    </footer>
+{% endblock %}

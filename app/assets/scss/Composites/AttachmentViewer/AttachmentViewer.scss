@@ -1,0 +1,33 @@
+.attachment-viewer {
+}
+
+.attachment-viewer__header {
+    text-transform: uppercase;
+}
+
+.attachment-viewer__actions {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pdf-viewer__prev-page,
+.pdf-viewer__next-page {
+    i {
+        font-family: 'Font Awesome 6 Pro';
+        font-weight: 900;
+        font-size: 0;
+
+        &::before {
+            font-size: 1rem;
+        }
+    }
+}
+
+.pdf-viewer__prev-page i::before {
+    content: '\f060';
+}
+
+.pdf-viewer__next-page i::before {
+    content: '\f061';
+}

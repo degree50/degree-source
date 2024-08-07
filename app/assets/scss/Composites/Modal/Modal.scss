@@ -1,0 +1,53 @@
+$modalHeaderHeight: 50px;
+
+.modal {
+    position: fixed;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    background-color: transparentize($theme__color__black, 0.5);
+
+    z-index: $theme__z-index--modal;
+}
+
+.modal__inner {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    width: 500px;
+    max-height: 90vh;
+
+    background-color: $theme__color__white;
+    border: 1px solid $theme__color__grey;
+}
+
+.modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $theme__spacing--base;
+    padding: $theme__spacing--base $theme__spacing--large;
+
+    border-bottom: 1px solid $theme__color__grey--light;
+
+    h3 {
+        margin: 0;
+    }
+}
+
+.modal__footer {
+    position: sticky;
+    padding: $theme__spacing--base $theme__spacing--large;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: $theme__spacing--base;
+}
+
+.modal__content {
+    overflow: auto;
+    padding: $theme__spacing--base $theme__spacing--large;
+}

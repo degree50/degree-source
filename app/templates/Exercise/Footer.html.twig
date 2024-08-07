@@ -1,0 +1,58 @@
+<footer class="footer">
+    <div class="button-group footer__left">
+        {% if previousExercisePhase %}
+            <a
+                class="button button--type-outline-primary button--size-small"
+                href="{{ path((testMode) ? 'exercise__show-test-phase' : 'exercise__show-phase', {id: exercise.id, phaseId: previousExercisePhase.id}) }}"
+            >
+                {{ "common.previousPhase"|trans({}, 'DegreeBase') }}
+            </a>
+        {% else %}
+            <a class="button button--type-outline-primary button--size-small" href="{{ path('exercise-overview', {id: exercise.course.id}) }}">
+                {{ "exercise.new.back"|trans({}, 'DegreeBase') }}
+            </a>
+        {% endif %}
+        {% if testMode and is_granted('exercise_edit', exercise) %}
+            {% if currentPhaseIndex + 1 > 0 %}
+                <a class="button button--type-outline-primary button--size-small" href="{{ path('exercise-phase__edit', {id: exercise.id, phase_id: exercisePhase.id}) }}">
+                    <i class="fas fa-pencil-alt"></i> {{ "exercisePhase.edit.title"|trans({}, 'DegreeBase') }}
+                </a>
+            {% else %}
+                <a class="button button--type-outline-primary button--size-small" href="{{ path('exercise__edit', {id: exercise.id}) }}">
+                    <i class="fas fa-pencil-alt"></i> {{ "exercise.edit.title"|trans({}, 'DegreeBase') }}
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if showPhasesProgression %}
+        <span class="footer__center">
+            {{ (testMode) ? "common.testingOf"|trans({}, 'DegreeBase') : '' }}
+            {{ "common.phase"|trans({}, 'DegreeBase') }} {{ currentPhaseIndex + 1 }} / {{ amountOfPhases + 1 }}: {{ exercisePhase.name }}
+        </span>
+    {% endif %}
+
+    <div class="footer__right">
+        {% if nextExercisePhase %}
+            {% if testMode %}
+                <a class="button button--type-primary  button--size-small" href="{{ path('exercise__show-test-phase', {id: exercise.id, phaseId: nextExercisePhase.id}) }}">
+                    {{ (currentPhaseIndex < 0) ? "exercise.test.title"|trans({}, 'DegreeBase') : "common.nextPhase"|trans({}, 'DegreeBase') }}
+                </a>
+            {% else %}
+                {% if is_granted('exercisePhase_viewExercisePhase', nextExercisePhase) %}
+                    <a class="button button--type-primary  button--size-small" href="{{ path('exercise__show-phase', {id: exercise.id, phaseId: nextExercisePhase.id}) }}">
+                        {{ (currentPhaseIndex < 0) ? "exercise.show.title"|trans({}, 'DegreeBase') : "common.nextPhase"|trans({}, 'DegreeBase') }}
+                    </a>
+                {% else %}
+                    <button type="button" class="button button--type-primary button--size-small disabled" disabled="disabled">
+                        {{ (currentPhaseIndex < 0) ? "exercise.show.title"|trans({}, 'DegreeBase') : "common.nextPhase"|trans({}, 'DegreeBase') }}
+                    </button>
+                {% endif %}
+            {% endif %}
+        {% elseif amountOfPhases == currentPhaseIndex %}
+            <a class="button button--type-primary button--size-small" href="{{ path('exercise-overview', {id: exercise.course.id}) }}">
+                {{ "exercise.labels.finish"|trans({}, 'DegreeBase') }}
+            </a>
+        {% endif %}
+    </div>
+</footer>

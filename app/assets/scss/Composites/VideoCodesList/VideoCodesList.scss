@@ -1,0 +1,16 @@
+.video-codes-list {
+    @include removeListStyles();
+
+    li.video-codes-list-item {
+        margin-bottom: 10px;
+
+        &:focus-within {
+            outline: 2px solid $theme__color__grey--dark;
+            outline-offset: 2px;
+        }
+    }
+
+    .video-code__content {
+        padding: 0;
+    }
+}

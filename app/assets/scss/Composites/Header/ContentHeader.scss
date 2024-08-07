@@ -1,0 +1,21 @@
+.content-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 5px;
+
+    border-bottom: 1px solid $theme__color__grey;
+
+    &--center {
+        justify-content: center;
+    }
+
+    > * {
+        margin-bottom: 0;
+    }
+}
+
+.solution-app .content-header {
+    margin: 0;
+}

@@ -1,0 +1,32 @@
+.video-editor-menu {
+    position: relative;
+
+    &--right {
+        margin-left: $theme__spacing--huge;
+
+        @include mq(xmedium) {
+            margin-left: auto;
+        }
+    }
+}
+
+.video-editor-menu__count-badge {
+    position: absolute;
+    display: flex;
+
+    align-items: baseline;
+    justify-content: center;
+    right: -7px;
+    bottom: -5px;
+    width: 15px;
+    height: 15px;
+
+    background-color: $theme__color__red;
+    border: none;
+    border-radius: 9999px;
+
+    color: $theme__color__white;
+    font-size: calc(0.7 * #{$base__fontSize});
+
+    z-index: 1000;
+}

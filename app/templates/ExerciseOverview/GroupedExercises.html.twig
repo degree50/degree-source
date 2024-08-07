@@ -1,0 +1,11 @@
+{% for group in groupedExercises %}
+    {% if group.exercises|length > 0 %}
+        {% set groupIdTransVar = 'exerciseOverview.groups.' ~ (group.id) %}
+        <h5>{{ groupIdTransVar | trans({}, 'DegreeBase') }}</h5>
+        <ul class="overview">
+            {% for exercise in group.exercises %}
+                {{ include('ExerciseOverview/Exercise.html.twig', {exercise: exercise}) }}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endfor %}

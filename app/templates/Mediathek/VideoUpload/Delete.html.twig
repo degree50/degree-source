@@ -1,0 +1,45 @@
+{% extends 'BaseFullscreen.html.twig' %}
+
+{% block title %}{{ "video.delete.title"|trans({}, 'DegreeBase') }}{% endblock %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="content-header content-header--center">
+            <h3>{{ "video.delete.title"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+        <h4>{{ "video.delete.usage"|trans({}, 'DegreeBase') }}</h4>
+        <p class="alert alert-warning">{{ "video.delete.warning"|trans({}, 'DegreeBase') }}</p>
+        {% if video.exercisePhases|length == 0 %}
+            <p>{{ "video.delete.noUsage"|trans({}, 'DegreeBase') }}</p>
+        {% else %}
+            <table class="table table-sm">
+                <thead class="thead-light">
+                <tr>
+                    <th>{{ "common.exercise"|trans({}, 'DegreeBase') }}</th>
+                    <th>{{ "common.phase"|trans({}, 'DegreeBase') }}</th>
+                    <th>{{ "video.delete.hasSolutions"|trans({}, 'DegreeBase') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for phase in video.exercisePhases %}
+                    <tr>
+                        <td>{{ phase.belongsToExercise.name }}</td>
+                        <td>{{ phase.name }}</td>
+                        <td>{% if phase.hasSolutions %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <a class="button button--type-outline-primary footer__left" href="{{ path('mediathek--index') }}">{{ "video.upload.back"|trans({}, 'DegreeBase') }}</a>
+        <div class="footer__right">
+            <a class="button button--type-danger" href="{{ path('mediathek__video--delete', {id: video.id, confirm: true}) }}">
+                {{ "video.delete.title"|trans({}, 'DegreeBase') }}
+            </a>
+        </div>
+    </footer>
+{% endblock %}

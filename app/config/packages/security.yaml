@@ -1,0 +1,58 @@
+security:
+    # TODO: think about rate limiting: https://symfony.com/doc/6.4/security.html#limiting-login-attempts
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Domain\User\Model\User
+                property: email
+
+    password_hashers:
+        # Use native password hasher, which auto-selects and migrates the best
+        # possible hashing algorithm (which currently is "bcrypt")
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            entry_point: form_login
+            lazy: true
+            provider: app_user_provider
+            access_denied_handler: App\Security\AccessDeniedHandler
+
+            # we allow logging in both via SAML (Single Sign On) and via form_login.
+            saml:
+                identifier_attribute: mail
+                check_path: saml_acs
+                login_path: saml_login
+                failure_path: app_login
+                always_use_default_target_path: true
+                user_factory: saml_user_factory
+                persist_user: true
+
+            form_login:
+                username_parameter: email
+                password_parameter: password
+                login_path: app_login
+                check_path: app_login
+                always_use_default_target_path: true
+            logout:
+                # this URL must match the `app_logout` route.
+                # DO NOT CHANGE THE URL, as the SAML IDP calls /saml/logout. This is part of the public SAML API at https://<domain>/saml/metadata
+                path: /saml/logout
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }

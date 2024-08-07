@@ -1,0 +1,44 @@
+.video-editor {
+    display: grid;
+    grid-template-rows: 1fr 40px auto;
+    height: 100%;
+
+    .video-container {
+        position: relative;
+        background-color: black;
+    }
+
+    &--media-lane-visible {
+        grid-template-rows: 1fr 40px min(350px, 30vh);
+    }
+
+    &--media-lane-full-height {
+        display: block;
+    }
+}
+
+.video-editor__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $theme__spacing--huge;
+    padding: $theme__spacing--small $theme__spacing--base;
+
+    background-color: $theme__color__grey--light;
+
+    &--hidden {
+        display: none;
+    }
+}
+
+.video-editor__toolbar__button {
+    position: relative;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+
+    &--with-text {
+        width: auto;
+        padding: 0 $theme__spacing--base;
+    }
+}

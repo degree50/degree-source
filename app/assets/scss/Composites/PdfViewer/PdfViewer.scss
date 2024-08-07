@@ -1,0 +1,41 @@
+.pdf-viewer {
+    border: 1px solid $theme__color__grey--dark;
+
+    text-align: center;
+
+    canvas {
+        margin: auto;
+    }
+}
+
+.pdf-viewer__loader {
+    height: 100%;
+    width: 100%;
+    padding-top: 80px;
+
+    text-align: center;
+    color: $theme__color__primary;
+}
+
+.pdf-viewer__navbar {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    background-color: $theme__color__grey--dark;
+
+    color: $theme__color__white;
+    font-size: $base__fontSize--smaller;
+}
+
+.pdf-viewer__pages {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.pdf-viewer__error {
+    padding-top: 80px;
+
+    color: $theme__color__red;
+}

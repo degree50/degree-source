@@ -1,0 +1,166 @@
+.button,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $theme__spacing--base;
+    padding: $theme__spacing--base $theme__spacing--large;
+
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 0;
+    -webkit-appearance: none;
+    background: none;
+
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    text-decoration: none;
+    text-align: center;
+
+    cursor: pointer;
+    overflow: hidden;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:focus {
+        box-shadow: none;
+        outline: 2px solid $theme__color__grey--dark;
+        outline-offset: 2px;
+
+        text-decoration: none;
+    }
+
+    &:disabled,
+    &.disabled {
+        opacity: 0.5 !important;
+
+        cursor: default;
+        pointer-events: none;
+    }
+}
+
+.button--type-link {
+    padding: 0;
+    display: inline;
+
+    border: none;
+
+    color: $theme__color__primary;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $theme__color__primary--dark;
+    }
+
+    &:disabled,
+    &.disabled {
+        color: $theme__color__primary !important;
+    }
+}
+
+.button--type-primary,
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
+    color: $theme__color__white;
+    background-color: $theme__color__primary;
+    border-color: $theme__color__primary;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $theme__color__white;
+        background-color: $theme__color__primary--dark;
+        border-color: $theme__color__primary--dark;
+    }
+}
+
+.button--type-outline-primary {
+    color: $theme__color__primary;
+    background-color: $theme__color__white;
+    border-color: $theme__color__primary;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $theme__color__white;
+        background-color: $theme__color__primary--dark;
+        border-color: $theme__color__primary--dark;
+    }
+}
+
+.button--type-secondary,
+.btn-secondary {
+    color: $theme__color__white;
+    background-color: $theme__color__secondary;
+    border-color: $theme__color__secondary;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $theme__color__white;
+        background-color: $theme__color__secondary--dark;
+        border-color: $theme__color__secondary--dark;
+    }
+}
+
+.button--type-grey {
+    color: $theme__color__white;
+    background-color: $theme__color__grey;
+    border-color: $theme__color__grey;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $theme__color__white;
+        background-color: $theme__color__grey--dark;
+        border-color: $theme__color__grey--dark;
+    }
+}
+
+.button--type-danger {
+    color: $theme__color__white;
+    background-color: $theme__color__red;
+    border-color: $theme__color__red;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $theme__color__white;
+        background-color: $theme__color__red--dark;
+        border-color: $theme__color__red--dark;
+    }
+}
+
+.button--type-outline-danger {
+    color: $theme__color__red;
+    background-color: $theme__color__white;
+    border-color: $theme__color__red;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $theme__color__white;
+        background-color: $theme__color__red;
+        border-color: $theme__color__red;
+    }
+}
+
+.button--size-small {
+    padding: $theme__spacing--small $theme__spacing--base;
+}
+
+.button--size-large {
+    padding: 15px $theme__spacing--large;
+}
+
+.button--block {
+    width: 100%;
+}
+
+.button--block + .button--block {
+    margin-top: $theme__spacing--base;
+}

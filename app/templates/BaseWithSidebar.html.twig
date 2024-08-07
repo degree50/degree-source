@@ -1,0 +1,23 @@
+{% extends 'Layouts/Default.html.twig' %}
+{% block main %}
+    {{ include('Partials/Header.html.twig') }}
+    <main class="main main--with-header {% block layoutCssClass %}{% endblock %}">
+        <div class="main-inner">
+            <div id="sidebar" class="sidebar {{ sidebar_is_open }}" data-controller="sidebar">
+                <div class="sidebar__content">
+                    {% block sidebar %}{% endblock %}
+                </div>
+                <div class="sidebar__toggle">
+                    <button id="sidebar-toggle" class="button button--type-link button--size-small" type="button" title="Sidebar auf- und zuklappen">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="content-with-sidebar">
+                {{ include('Partials/FlashMessages.html.twig') }}
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+    </main>
+    {% block footer %}{% endblock %}
+{% endblock %}

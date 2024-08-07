@@ -1,0 +1,13 @@
+{% extends 'BaseNoHeader.html.twig' %}
+{% trans_default_domain 'UserExpiration' %}
+
+{% block title %}{{ "common.degree"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ 'form.title'|trans }}</h1>
+        <p>{{ 'form.info.expiration'|trans({'deletionDate': deletionDate}) }}</p>
+        <p>{{ 'form.info.extend-account'|trans }}</p>
+        <p><a href="{{ url(routeName) }}">{{ 'form.submit'|trans }}</a></p>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+.number-field {
+    .group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .number-field__inc-button,
+    .number-field__dec-button {
+        border: none;
+        background: transparent;
+    }
+
+    input {
+        text-align: center;
+    }
+}

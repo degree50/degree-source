@@ -1,0 +1,5 @@
+.time-display {
+    > * + * {
+        margin-left: $theme__spacing--tiny;
+    }
+}

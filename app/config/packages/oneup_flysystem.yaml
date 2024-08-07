@@ -1,0 +1,47 @@
+# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle/tree/master/Resources/doc/index.md
+# Mount points need to be in sync with the ones in AppRuntime.php
+oneup_flysystem:
+    adapters:
+        default_adapter:
+            local:
+                location: '%kernel.cache_dir%/flysystem'
+        uploaded_videos_adapter:
+            local:
+                location: '%kernel.project_dir%/var/data/persistent/videos/original'
+        uploaded_subtitles_adapter:
+            local:
+                location: '%kernel.project_dir%/var/data/persistent/subtitles/original'
+        uploaded_audio_descriptions_adapter:
+            local:
+                location: '%kernel.project_dir%/var/data/persistent/audio_descriptions/original'
+        encoded_videos_adapter:
+            local:
+                location: '%kernel.project_dir%/public/data/encoded_videos'
+        uploaded_attachment_adapter:
+            local:
+                location: '%kernel.project_dir%/public/data/material'
+    filesystems:
+        local_tmp:
+            adapter: default_adapter
+            # we need one file system to be available locally as "scratch space".
+            # this needs to be named "local_tmp" (see FileSystemService::LOCAL_TMP_FILESYSTEM_MOUNT),
+            # because our code relies on this path.
+            mount: local_tmp
+        default_filesystem:
+            adapter: default_adapter
+            alias: League\Flysystem\Filesystem
+        uploaded_videos:
+            adapter: uploaded_videos_adapter
+            mount: uploaded_videos
+        uploaded_subtitles:
+            adapter: uploaded_subtitles_adapter
+            mount: uploaded_subtitles
+        uploaded_audio_descriptions:
+            adapter: uploaded_audio_descriptions_adapter
+            mount: uploaded_audio_descriptions
+        encoded_videos:
+            adapter: encoded_videos_adapter
+            mount: encoded_videos
+        uploaded_attachment:
+            adapter: uploaded_attachment_adapter
+            mount: uploaded_attachment

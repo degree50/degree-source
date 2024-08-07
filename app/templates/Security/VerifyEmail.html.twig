@@ -1,0 +1,22 @@
+{% extends 'BaseWithHeaderWithoutNavigation.html.twig' %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% trans_default_domain 'UserRegistration' %}
+
+{% block body %}
+    <div class="container text-justified">
+        <h1 class="h1">{{ "process.email-confirmation.title"|trans }}</h1>
+        <p>{{ "process.email-confirmation.body"|trans }}</p>
+
+        <p>{{ "process.email-confirmation.spamInfo"|trans }}</p>
+        <p><a href="{{ path('app_resend-verification-email') }}" role="link">{{ "process.email-confirmation.retryLink"|trans }}</a></p>
+    </div>
+
+    <footer class="footer footer--center">
+        {{ include('Version.html.twig') }}
+        <a class="button button--type-link" href="{{ path('imprint') }}" role="link">{{ "common.imprint"|trans({}, 'DegreeBase') }}</a>
+        <a class="button button--type-link" href="{{ path('data-privacy') }}" role="link">{{ "common.dataPrivacy"|trans({}, 'DegreeBase') }}</a>
+        <a class="button button--type-link" href="{{ path('terms-of-use') }}" role="link">{{ "common.termsOfUse"|trans({}, 'DegreeBase') }}</a>
+    </footer>
+{% endblock %}
+

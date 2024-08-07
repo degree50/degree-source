@@ -1,0 +1,63 @@
+$toolbarWidth: 50px;
+
+.toolbar {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    right: 0;
+    top: 0;
+    width: $toolbarWidth;
+    height: 100%;
+    padding: 5px;
+    padding-top: 20px;
+
+    background-color: $theme__color__grey--dark;
+    // outline: 1px solid $theme__color__grey--dark;
+
+    @include transition(width 250ms ease 0s);
+    z-index: 8000;
+}
+
+.toolbar__toggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: -40px;
+
+    background-color: $theme__color__grey;
+    border: 1px solid $theme__color__grey--dark;
+}
+
+.toolbar-item {
+    position: relative;
+    margin-bottom: 10px;
+    width: $toolbarWidth - 10px;
+    height: $toolbarWidth - 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.5em;
+}
+
+.toolbar-item__counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: -6px;
+    top: -7px;
+
+    background-color: $theme__color__red;
+    border: 1px solid $theme__color__white;
+    border-radius: 50%;
+
+    font-size: $base__fontSize--tiny;
+    color: $theme__color__white;
+
+    z-index: 10;
+}

@@ -1,0 +1,61 @@
+{% extends 'BaseFullscreen.html.twig' %}
+
+{% block title %}{{ "video.edit.title"|trans({}, 'DegreeBase') }}{% endblock %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="content-header content-header--center">
+            <h3>{{ "video.edit.title"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+
+        {% if video.encodingStatus == 1 %}
+            <div data-controller="react" data-react-widget="VideoPlayer" data-react-props="{{ { 'videoJsOptions':{ 'controls': true }, videoMap: videoMap } | json_encode|e('html_attr')}}"></div>
+        {% elseif video.encodingStatus == 3 %}
+            <div class="alert alert-danger">
+                {{ "video.edit.videoEncodingFailed"|trans({}, 'DegreeBase') }}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                {{ "video.edit.isEncoding"|trans({}, 'DegreeBase') }}
+            </div>
+        {% endif %}
+    </div>
+    {{ form_start(form) }}
+    <div class="container">
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.personalNotes) }}
+        {{ form_row(form.courses) }}
+        <div class="form__data-privacy">
+            {{ form_row(form.dataPrivacyAccepted) }}
+            {{ form_row(form.dataPrivacyPermissionsAccepted) }}
+            <a href="{{ path('data-privacy') }}" target="_blank">{{ "common.dataPrivacy"|trans({}, 'DegreeBase') }}</a> |
+            <a href="{{ path('terms-of-use') }}" target="_blank">{{ "common.termsOfUse"|trans({}, 'DegreeBase') }}</a>
+        </div>
+        <hr role="presentation"/>
+        <h4>{{ "video.delete.usage"|trans({}, 'DegreeBase') }}</h4>
+        <ul class="list">
+            {% for phase in video.exercisePhases %}
+                <li>{{ phase.belongsToExercise.name }} / {{ phase.name }}</li>
+            {% else %}
+                <li>{{ "video.delete.noUsage"|trans({}, 'DegreeBase') }}</li>
+            {% endfor %}
+        </ul>
+        <hr role="presentation"/>
+        <a
+            href="{{ path('mediathek__video--delete', {id: video.id}) }}"
+            class="button button--type-outline-danger"
+        >
+            {{ "video.delete.title"|trans({}, 'DegreeBase') }}
+        </a>
+    </div>
+
+    <footer class="footer">
+        <a class="button button--type-outline-primary footer__left" href="{{ path('mediathek--index') }}">{{ "video.upload.back"|trans({}, 'DegreeBase') }}</a>
+        <div class="footer__right">
+            {{ form_row(form.save) }}
+        </div>
+    </footer>
+    {{ form_end(form) }}
+{% endblock %}

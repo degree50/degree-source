@@ -1,0 +1,58 @@
+.video-editor__tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    background-color: $theme__color__grey--light;
+    border-bottom: 3px solid $theme__color__primary;
+
+    li {
+        div {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+
+            color: $theme__color__primary;
+            border-color: $theme__color__white;
+            background-color: $theme__color__white;
+
+            &.active {
+                color: $theme__color__white;
+                border-color: $theme__color__primary;
+                background-color: $theme__color__primary;
+            }
+
+            &:hover {
+                color: $theme__color__white;
+                background-color: $theme__color__primary--dark;
+                border-color: $theme__color__primary--dark;
+            }
+
+            &:focus {
+                color: $theme__color__white;
+                background-color: $theme__color__secondary--dark;
+                border-color: $theme__color__secondary--dark;
+                box-shadow: none;
+                outline: none;
+            }
+
+            &:active {
+                color: $theme__color__white;
+                background-color: $theme__color__grey--dark;
+                border-color: $theme__color__grey--dark;
+                box-shadow: none;
+                outline: none;
+            }
+
+            &.disabled,
+            &:disabled {
+                color: $theme__color__white;
+                background-color: $theme__color__grey--light;
+                border-color: $theme__color__grey--light;
+            }
+        }
+    }
+}

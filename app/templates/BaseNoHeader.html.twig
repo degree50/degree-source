@@ -1,0 +1,10 @@
+{% extends 'Layouts/Default.html.twig' %}
+
+{% block main %}
+    <main class="main {% block layoutCssClass %}{% endblock %}">
+        <div class="main-inner">
+            {{ include('Partials/FlashMessages.html.twig') }}
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+{% endblock %}

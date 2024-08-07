@@ -1,0 +1,93 @@
+{% extends 'BaseWithSidebar.html.twig' %}
+
+{% block title %}Aufgaben Übersicht{% endblock %}
+
+{% block sidebar %}
+    {{ include('ExerciseOverview/Sidebar.html.twig', {sidebarItems: sidebarItems, currentItem: course}) }}
+{% endblock %}
+
+{% block body %}
+    <header class="content-header">
+        {% if course %}
+            <h3>{{ course.name }} - {{ "exerciseOverview.index.allExercises"|trans({}, 'DegreeBase') }}</h3>
+            {% if is_granted('course_edit', course) or is_granted('course_newExercise', course) %}
+                <div class="button-group">
+                    {% if is_granted('course_edit', course) %}
+                        <div class="dropdown">
+                            <button
+                                class="button button--type-link dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                            >
+                                {{ "exerciseOverview.index.manageCourse"|trans({}, 'DegreeBase') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {% if is_granted('course_editMembers', course) %}
+                                    <a href="{{ path('exercise-overview__course--members', {id: course.id}) }}"
+                                       class="dropdown-item">
+                                        <i class="fas fa-users"></i> {{ "course.editMembers.title"|trans({}, 'DegreeBase') }}
+                                    </a>
+                                {% endif %}
+                                {% if is_granted('course_edit', course) %}
+                                    <a href="{{ path('exercise-overview__course--edit', {id: course.id}) }}"
+                                       class="dropdown-item">
+                                        <i class="fas fa-pencil-alt"></i> {{ "course.edit.title"|trans({}, 'DegreeBase') }}
+                                    </a>
+                                {% endif %}
+
+                                {% if is_granted('course_exportCSV', course) %}
+                                    <a href="{{ path('exercise-overview__course-export-csv', {id: course.id}) }}"
+                                       class="dropdown-item"
+                                    ><i class="fas fa-file-export"></i>  {{ "course.exportCSV.title"|trans({}, 'DegreeBase') }}
+                                    </a>
+                                {% endif %}
+
+                                {% if is_granted('course_delete', course) %}
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ path('exercise-overview__course--delete', {id: course.id}) }}"
+                                       class="dropdown-item text-danger">
+                                        <i class="fas fa-trash"></i> {{ "course.delete.title"|trans({}, 'DegreeBase') }}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if is_granted('course_newExercise', course) %}
+                        <a href="{{ path('exercise__new', {id: course.id}) }}"
+                           class="button button--type-primary">
+                            <i class="fas fa-plus-circle"></i> {{ "exercise.new.title"|trans({}, 'DegreeBase') }}
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <h3>{{ "exerciseOverview.index.allCourses"|trans({}, 'DegreeBase') }} - {{ "exerciseOverview.index.allExercises"|trans({}, 'DegreeBase') }}</h3>
+        {% endif %}
+    </header>
+    {% if is_granted('ROLE_DOZENT') %}
+        <div class="overview-filter">
+            <div class="button-group" role="group" aria-label="{{ "exerciseOverview.index.filterByStatus"|trans({}, 'DegreeBase') }}">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">{{ "common.filter"|trans({}, 'DegreeBase') }}</div>
+                </div>
+                {{ _self.filter(courseId, 0, activeFilter, "common.hidden"|trans({}, 'DegreeBase')) }}
+                {{ _self.filter(courseId, 2, activeFilter, "common.public"|trans({}, 'DegreeBase')) }}
+                {{ _self.filter(courseId, 1, activeFilter, "common.finished"|trans({}, 'DegreeBase')) }}
+            </div>
+        </div>
+    {% endif %}
+
+    {{ include('ExerciseOverview/GroupedExercises.html.twig', {groupedExercises: groupedExercises}) }}
+{% endblock %}
+
+{% macro filter(courseId, filter, activeFilter, label) %}
+    {% if filter == activeFilter and activeFilter is not null %}
+        <a href="{{ path('exercise-overview', {id: courseId, status: null}) }}" class="button button--type-primary">{{ label }}</a>
+    {% else %}
+        <a href="{{ path('exercise-overview', {id: courseId, status: filter}) }}"
+           class="button button--type-outline-primary">{{ label }}</a>
+    {% endif %}
+{% endmacro %}

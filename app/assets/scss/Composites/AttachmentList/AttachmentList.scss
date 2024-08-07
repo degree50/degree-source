@@ -1,0 +1,24 @@
+.attachment-list {
+    @include removeListStyles();
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: $theme__spacing--small;
+        gap: $theme__spacing--base;
+
+        .button {
+            white-space: nowrap;
+        }
+    }
+}
+
+.attachment-list__name {
+    display: inline-block;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

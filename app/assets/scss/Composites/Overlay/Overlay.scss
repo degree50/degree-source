@@ -1,0 +1,46 @@
+.overlay {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 40%;
+    padding-top: 50px;
+    padding-bottom: 80px;
+    padding-right: 50px;
+    min-width: 420px;
+
+    background-color: $theme__color__white;
+    border-left: 1px solid $theme__color__grey--dark;
+    box-shadow: -5px 0px 5px 0px transparentize($theme__color__black, 0.5);
+
+    z-index: 7000;
+    @include transition(width 250ms ease);
+
+    &--is-visible {
+        display: block;
+    }
+
+    &--small {
+        width: 30%;
+    }
+
+    &--large {
+        width: 60%;
+    }
+}
+
+.overlay__content {
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100%;
+
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.overlay__close {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}

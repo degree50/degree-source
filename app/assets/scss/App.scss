@@ -1,0 +1,104 @@
+// Import of bootstrap - maybe remove it later in the project
+@import '~bootstrap/scss/bootstrap';
+@import '@fortawesome/fontawesome-pro/scss/fontawesome.scss';
+@import '@fortawesome/fontawesome-pro/scss/regular.scss';
+@import '@fortawesome/fontawesome-pro/scss/solid.scss';
+@import '@fortawesome/fontawesome-pro/scss/brands.scss';
+
+@import 'GeneralStyles/Variables';
+@import 'GeneralStyles/Functions';
+@import 'GeneralStyles/Mixins';
+@import 'GeneralStyles/Layout';
+@import 'GeneralStyles/Typography';
+
+// components
+@import 'Components/Accordion/Accordion';
+@import 'Components/Button/Button';
+@import 'Components/Button/ButtonGroup';
+@import 'Components/ButtonCheckbox/ButtonCheckbox';
+@import 'Components/Checkbox/Checkbox';
+@import 'Components/CKEditor/CustomPlugins/CKEditorPrintPlugin/CKEditorPrintPlugin';
+@import 'Components/Dropdown/Dropdown';
+@import 'Components/Dropzone/Dropzone';
+@import 'Components/ExpirationNotice/ExpirationNotice';
+@import 'Components/Image/Image';
+@import 'Components/Input/Input';
+@import 'Components/Link/Link';
+@import 'Components/Meter/Meter';
+@import 'Components/SidebarItem/SidebarItem';
+@import 'Components/StripedBanner/StripedBanner';
+@import 'Components/Tab/Tab';
+@import 'Components/Textarea/Textarea';
+@import 'Components/Tile/Tile';
+@import 'Components/TimeDisplay/TimeDisplay';
+@import 'Components/TimeInput/TimeInput';
+@import 'Components/VersionInfo/VersionInfo';
+@import 'Components/VideoCheckbox/VideoCheckbox';
+@import 'Components/VideoCode/VideoCode';
+
+// composites
+@import 'Composites/Breadcrumb/Breadcrumb';
+@import 'Composites/ExercisePhase/ExercisePhase';
+@import 'Composites/ExercisePhase/VideoAnalysis';
+@import 'Composites/FlashMessages/FlashMessages';
+@import 'Composites/Footer/Footer';
+@import 'Composites/Form/ExerciseForm';
+@import 'Composites/Form/Form';
+@import 'Composites/Header/ContentHeader';
+@import 'Composites/Header/Header';
+@import 'Composites/List/List';
+@import 'Composites/LoadingScreen/LoadingScreen';
+@import 'Composites/Login/Login';
+@import 'Composites/AttachmentList/AttachmentList';
+@import 'Composites/AttachmentViewer/AttachmentViewer';
+@import 'Composites/Modal/Modal';
+@import 'Composites/Navigation/Navigation';
+@import 'Composites/Overlay/Overlay';
+@import 'Composites/OverviewFilter/OverviewFilter';
+@import 'Composites/PdfViewer/PdfViewer';
+@import 'Composites/Presence/Presence';
+@import 'Composites/Sidebar/Sidebar';
+@import 'Composites/Solutions/Solutions';
+@import 'Composites/Teams/Team';
+@import 'Composites/Teams/Teams';
+@import 'Composites/Tiles/Tiles';
+@import 'Composites/Toolbar/Toolbar';
+@import 'Composites/VideoCodesList/VideoCodesList';
+@import 'Composites/VideoCodeSelection/VideoCodeSelection';
+@import 'Composites/VideoPlayer/VideoPlayer';
+@import 'Composites/VideoPlayer/VideoPlayerWrapper';
+
+@import 'Composites/MaterialEditor/MaterialEditor';
+@import 'Composites/MaterialSolution/MaterialSolution';
+
+@import 'Composites/VideoEditor/AddItemButton';
+@import 'Composites/VideoEditor/Filters';
+@import 'Composites/VideoEditor/InteractionArea';
+@import 'Composites/VideoEditor/Menu';
+@import 'Composites/VideoEditor/MediaItemList';
+@import 'Composites/VideoEditor/MediaLane';
+@import 'Composites/VideoEditor/MediaLaneContainer';
+@import 'Composites/VideoEditor/MediaLaneToolbar';
+@import 'Composites/VideoEditor/Overlay';
+@import 'Composites/VideoEditor/PreviousSolutions';
+@import 'Composites/VideoEditor/ShortCutConfiguration';
+@import 'Composites/VideoEditor/VideoCodePrototypeInformation';
+@import 'Composites/VideoEditor/VideoContextPlayer';
+@import 'Composites/VideoEditor/VideoEditor';
+@import 'Composites/VideoEditor/VideoEditorPlayer';
+@import 'Composites/VideoEditor/VideoEditorTabs';
+@import 'Composites/VideoEditor/VideoEditorMenu';
+@import 'Composites/Overview/Overview';
+@import 'Composites/Overview/OverviewItem';
+
+@import '../js/Components/VideoEditor/components/MultiLane/MultiLane';
+@import '../js/Components/VideoEditor/components/MediaLane/MediaItems/MediaItems';
+@import '../js/StimulusControllers/SolutionsApp/CuttingSolutions';
+
+@import '../js/StimulusControllers/Schreibtisch/Schreibtisch';
+
+///////////////////////////////////////////////
+// Styles for server side rendered templates //
+///////////////////////////////////////////////
+
+@import '../../templates/Partials/DataPrivacy';

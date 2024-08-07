@@ -1,0 +1,29 @@
+.video-editor__overlay {
+    @extend .modal;
+
+    z-index: $theme__z-index--overlay + 1;
+}
+
+.video-editor__overlay__wrapper {
+    @extend .modal__inner;
+    width: auto;
+    min-width: 500px;
+    max-width: 900px;
+    max-height: 80%;
+
+    &--fullWidth {
+        width: 95%;
+    }
+}
+
+.video-editor__overlay__header {
+    @extend .modal__header;
+}
+
+.video-editor__overlay__content {
+    @extend .modal__content;
+}
+
+.video-editor__overlay__footer {
+    @extend .modal__footer;
+}

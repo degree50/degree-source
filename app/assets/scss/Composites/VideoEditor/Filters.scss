@@ -1,0 +1,36 @@
+.filter-list {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    & li {
+        display: flex;
+        align-items: center;
+        padding-left: $theme__spacing--small;
+
+        &:focus-within {
+            color: $theme__color__white;
+            background-color: $theme__color__secondary--dark;
+        }
+    }
+
+    & input[type='checkbox'] {
+        margin-right: 5px;
+    }
+}
+
+.global-filter {
+    display: flex;
+    align-items: center;
+    padding-left: $theme__spacing--small;
+
+    &:focus-within {
+        color: $theme__color__white;
+        background-color: $theme__color__secondary--dark;
+    }
+
+    & input[type='checkbox'] {
+        margin-right: 5px;
+    }
+}

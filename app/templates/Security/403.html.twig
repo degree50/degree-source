@@ -1,0 +1,13 @@
+{% extends 'Base.html.twig' %}
+
+{% block title %}{{ "common.degree"|trans({}, 'DegreeBase') }} - {{ "security.403.accessDenied"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <header class="content-header">
+        <h3>{{ "security.403.accessDenied"|trans({}, 'DegreeBase') }}</h3>
+    </header>
+
+    <p>
+        {{ "security.403.info"|trans({}, 'DegreeBase') }}
+    </p>
+{% endblock %}

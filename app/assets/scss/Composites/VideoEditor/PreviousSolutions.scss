@@ -1,0 +1,14 @@
+.previous-solutions {
+    width: 100%;
+}
+
+.previous-solutions__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+        display: inline-block;
+    }
+}

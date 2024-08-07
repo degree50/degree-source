@@ -1,0 +1,12 @@
+vich_uploader:
+    db_driver: orm
+    storage: flysystem
+    mappings:
+        exercise_attachment:
+            uri_prefix: /exercise/attachment
+            upload_destination: uploaded_attachment
+            namer: Vich\UploaderBundle\Naming\OrignameNamer
+            #  default false, should the file be injected into the uploadable entity when it is loaded from the data store. The object will be an instance of Symfony\Component\HttpFoundation\File\File.
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

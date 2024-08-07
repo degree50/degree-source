@@ -1,0 +1,50 @@
+.button-checkbox {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+
+    input[type='checkbox'] {
+        position: absolute;
+        left: -20px;
+        width: 0;
+        height: 0;
+        outline: none;
+        border: none;
+
+        & ~ label {
+            margin: 4px;
+
+            i.fa-times {
+                margin: 0;
+                margin-right: 10px;
+                display: inline-block;
+            }
+
+            i.fa-check {
+                margin: 0;
+                margin-right: 10px;
+                display: none;
+            }
+        }
+
+        &:focus ~ label {
+            -webkit-appearance: none;
+            outline: 2px solid $theme__color__grey--dark;
+            outline-offset: 2px;
+        }
+
+        &:checked ~ label {
+            color: $theme__color__white;
+            background-color: $theme__color__primary--dark;
+            border-color: $theme__color__primary--dark;
+
+            i.fa-check {
+                display: inline-block;
+            }
+
+            i.fa-times {
+                display: none;
+            }
+        }
+    }
+}

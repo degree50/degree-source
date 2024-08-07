@@ -1,0 +1,23 @@
+.meter {
+    width: 100%;
+}
+
+.meter__label {
+    display: flex;
+    justify-content: center;
+}
+
+.meter__bar {
+    height: 15px;
+    box-sizing: border-box;
+    padding: 3px;
+    border: 1px solid $theme__color__grey;
+    background: $theme__color__white;
+    border-radius: 5px;
+
+    > div {
+        height: 7px;
+        background: $theme__color__primary;
+        border-radius: 3px;
+    }
+}

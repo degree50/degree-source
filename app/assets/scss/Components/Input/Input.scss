@@ -1,0 +1,18 @@
+input,
+.input {
+    color: $theme__color__text;
+    background-color: $theme__color__white;
+
+    border: 1px solid $theme__color__grey--light;
+    border-radius: 2px;
+
+    &:focus,
+    &:focus-within {
+        outline: 2px solid $theme__color__grey--dark;
+        outline-offset: 2px;
+    }
+
+    &:hover {
+        border-color: $theme__color__primary;
+    }
+}

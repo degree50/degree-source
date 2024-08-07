@@ -1,0 +1,158 @@
+{% set phaseTypeTransVar = 'exercisePhase.types.' ~ (exercisePhase.type.value) ~ '.label' %}
+{% extends 'BaseFullscreen.html.twig' %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block title %}{{ "exercisePhase.edit.title"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('exercise-overview', {id: exercise.course.id}) }}">
+                        {{ exercise.course.name }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('exercise__edit', {id: exercise.id}) }}">
+                        {{ exercise.name }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active"
+                    aria-current="page">{{ "exercisePhase.edit.title"|trans({}, 'DegreeBase') }}</li>
+            </ol>
+        </nav>
+
+        <header class="content-header">
+            <h3>{{ "exercisePhase.edit.title"|trans({}, 'DegreeBase') }}</h3>
+            {% if exercisePhase.hasSolutions %}
+                <div class="alert alert-warning">
+                    {{ "exercisePhase.edit.alreadyStarted"|trans({}, 'DegreeBase') }}
+                </div>
+            {% endif %}
+        </header>
+
+        <h5>{{ "common.type"|trans({}, 'DegreeBase') }}: {{ phaseTypeTransVar | trans({}, 'DegreeBase') }}</h5>
+
+        <div class="exercise-form">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.isGroupPhase) }}
+                    {% if exercisePhase.type.value != 'reflexion' %}
+                        {{ form_row(form.otherSolutionsAreAccessible) }}
+                    {% endif %}
+                    {% if exercisePhase.type.value == 'material' %}
+                        {{ form_row(form.reviewRequired) }}
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.dependsOnExercisePhase) }}
+                </div>
+            </div>
+            <hr role="presentation"/>
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.task) }}
+
+            {% if exercisePhase.type.value == 'material' %}
+                {{ form_row(form.material) }}
+            {% endif %}
+
+            <hr role="presentation"/>
+            {% if exercisePhase.type.value == 'videoAnalysis' %}
+                <p>{{ "exercisePhase.edit.componentsInfo"|trans({}, 'DegreeBase') }}</p>
+                {{ form_widget(form.videoAnnotationsActive) }}
+                {{ form_widget(form.videoCodesActive) }}
+            {% endif %}
+            <hr role="presentation"/>
+
+            {% if exercisePhase.type.value == 'videoAnalysis' or exercisePhase.type.value == 'videoCutting' %}
+                <h4>{{ "exercisePhase.labels.videosExtended"|trans({}, 'DegreeBase') }}</h4>
+                <div data-controller="videosForm">
+                    {{ form_row(form.videos) }}
+                </div>
+                <hr role="presentation"/>
+            {% endif %}
+
+            {% if exercisePhase.type.value == 'videoAnalysis' and exercisePhase.videoCodesActive %}
+                <h4>{{ "exercisePhase.labels.videoCodes"|trans({}, 'DegreeBase') }}</h4>
+                <p>{{ "exercisePhase.edit.videoCodesInfo"|trans({}, 'DegreeBase') }}</p>
+                <div class="form-inline video-code-form" id="add-new-video-code-form" data-controller="videoCodeForm"
+                     data-videoCodeForm-endpoint="{{ path('video-code__add', {id: exercisePhase.id}) }}"
+                     data-videoCodeForm-update="video-codes-list"
+                >
+                    <label id="code-color-label" class="sr-only" for="video-code-color">{{ "exercisePhase.edit.videoCodeColor"|trans({}, 'DegreeBase') }}</label>
+                    <input
+                        class="form-control"
+                        id="video-code-color"
+                        type="color"
+                        placeholder="#ccc"
+                        aria-describedby="code-color-label"
+                    />
+                    <label id="code-name-label" class="sr-only" for="video-code-name">{{ "exercisePhase.edit.videoCodeName"|trans({}, 'DegreeBase') }}</label>
+                    <input
+                        class="form-control"
+                        id="video-code-name"
+                        type="text"
+                        placeholder="{{ "exercisePhase.edit.videoCodeName"|trans({}, 'DegreeBase') }}"
+                        aria-describedby="code-name-label"
+                    />
+                    <button id="add-new-video-code" type="button" class="button button--type-primary"><i class="fas fa-plus"></i>
+                        {{ "exercisePhase.edit.addVideoCode"|trans({}, 'DegreeBase') }}
+                    </button>
+                </div>
+                <div
+                    id="video-codes-list"
+                    data-update-endpoint="{{ path('video-code__list', {id: exercisePhase.id}) }}"
+                >
+                    {{ render(path('video-code__list', {id: exercisePhase.id})) }}
+                </div>
+
+                <hr role="presentation"/>
+            {% endif %}
+
+            <h4>{{ "exercisePhase.labels.attachments"|trans({}, 'DegreeBase') }}</h4>
+            <p>
+                {{ "exercisePhase.edit.attachmentInfo"|trans({}, 'DegreeBase') }}
+                <span class="color-alert">({{ "exercisePhase.edit.attachmentAccessabilityInfo"|trans({}, 'DegreeBase') }})</span>
+            </p>
+            <div class="dropzone" data-controller="attachmentUpload"
+                 data-attachmentUpload-endpoint="{{ oneup_uploader_endpoint('uploaded_attachment') }}"
+                 data-attachmentUpload-remove-endpoint="{{ path('exercise-overview__attachment--delete-ajax') }}"
+                 data-attachmentUpload-label="{{ "exercisePhase.edit.uploadAttachment"|trans({}, 'DegreeBase') }}"
+                 data-attachmentUpload-phase-id="{{ exercisePhase.id }}"
+                 data-attachmentUpload-update="attachment-list">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <span class="form-text text-muted">{{ "exercisePhase.edit.uploadAttachmentInfo"|trans({}, 'DegreeBase') }}</span>
+            <h5>
+                {{ "exercisePhase.edit.attachments"|trans({}, 'DegreeBase') }}:
+            </h5>
+            <div id="attachment-list"
+                 data-update-endpoint="{{ path('exercise-overview__attachment--list', {id: exercisePhase.id}) }}">
+                {{ render(path('exercise-overview__attachment--list', {id: exercisePhase.id})) }}
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="button-group footer__left">
+            <a class="button button--type-outline-primary" href="{{ path('exercise__edit', {id: exercise.id}) }}">
+                {{ "exercisePhase.new.back"|trans({}, 'DegreeBase') }}
+            </a>
+            {% if is_granted('exercise_test', exercise) %}
+                <a class="button button--type-outline-primary" href="{{ path('exercise__show-test-phase', {id: exercise.id, phaseId: exercisePhase.id }) }}">
+                    {{ "exercisePhase.test.title"|trans({}, 'DegreeBase') }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="footer__right">
+            {{ form_row(form.save) }}
+        </div>
+    </footer>
+    {{ form_end(form) }}
+
+{% endblock %}
+

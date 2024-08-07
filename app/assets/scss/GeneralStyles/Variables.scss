@@ -1,0 +1,106 @@
+@font-face {
+    font-family: Akkurat;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(../../fonts/lineto-akkurat-pro-regular.eot);
+    src: url(../../fonts/lineto-akkurat-pro-regular.eot?#iefix) format('embedded-opentype'),
+    url(../../fonts/lineto-akkurat-pro-regular.woff2) format('woff2'),
+    url(../../fonts/lineto-akkurat-pro-regular.woff) format('woff');
+}
+
+@font-face {
+    font-family: Akkurat;
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(../../fonts/lineto-akkurat-pro-bold.eot);
+    src: url(../../fonts/lineto-akkurat-pro-bold.eot?#iefix) format('embedded-opentype'),
+    url(../../fonts/lineto-akkurat-pro-bold.woff2) format('woff2'),
+    url(../../fonts/lineto-akkurat-pro-bold.woff) format('woff');
+}
+
+$theme__color__red: #cc3f2d;
+$theme__color__red--dark: #9a2f21;
+$theme__color__gold: #ffd700;
+
+$theme__color__success: #84b819;
+$theme__color__warning: #d89326;
+$theme__color__error: $theme__color__red;
+
+// colors taken from tu dortmund website
+$theme__color__white: #fff;
+$theme__color__black: #000;
+
+$theme__color__primary: #5d8111;
+$theme__color__primary--light: #84b819;
+$theme__color__primary--lighter: #e2e8d7;
+$theme__color__primary--lightest: #f1f6e6;
+$theme__color__primary--dark: #395900;
+
+$theme__color__secondary: #0000ff;
+$theme__color__secondary--dark: #000099;
+
+$theme__color__grey: #616161;
+$theme__color__grey--light: #d8d8d8;
+$theme__color__grey--lighter: #f4f4f4;
+$theme__color__grey--lightest: #fafafa;
+$theme__color__grey--dark: #3b3b3b;
+
+$theme__color__text: $theme__color__grey--dark;
+$theme__color__text--light: $theme__color__grey;
+$theme__color__headline: $theme__color__black;
+
+// Add more colors here
+$theme__content__boxShadow: 0 5px 5px 0 transparentize($theme__color__black, 0.8);
+
+// spacing
+$theme__spacing--tiny: 2px;
+$theme__spacing--small: 5px;
+$theme__spacing--base: 10px;
+$theme__spacing--large: 20px;
+$theme__spacing--huge: 40px;
+
+// z-indices
+$theme__z-index--overlay: 9000;
+$theme__z-index--modal: 8000;
+$theme__z-index--footer: 7000;
+$theme__z-index--menu: 5000;
+$theme__z-index--media-lane-toolbar: 10;
+
+// fonts
+$theme__heading__fontWeight: 400;
+$theme__default__fontWeight: 400;
+$theme__bold__fontWeight: 700;
+
+$theme__font__akkurat: 'Akkurat', Helvetica, Arial, sans-serif;
+
+$theme__default__fontStack: $theme__font__akkurat;
+
+$base__fontSize: 16px;
+$base__fontSize--larger: 18px;
+$base__fontSize--smaller: 14px;
+$base__fontSize--tiny: 12px;
+$base__lineHeight: 1.5;
+$base__heading__lineHeight: 1.3;
+
+$h1__fontSize: 2.2rem;
+$h2__fontSize: 1.8rem;
+$h3__fontSize: 1.5rem;
+
+$button__height: 40px;
+$button__height--large: 50px;
+$button__height--larger: 60px;
+
+$header__height: 100px;
+$header__height--small: 80px;
+
+$breakpoints: (
+    xxsmall: '(max-width: 374px)',
+    xsmall: '(max-width: 500px)',
+    small: '(max-width: 768px)',
+    medium: '(max-width: 996px)',
+    xmedium: '(max-width: 1024px)',
+    large: '(max-width: 1400px)',
+    xlarge: '(max-width: 1800px)',
+);

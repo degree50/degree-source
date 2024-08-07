@@ -1,0 +1,21 @@
+form:
+    title: 'Account verlängern'
+    info:
+        expiration: 'Ihr Account läuft am deletionDate ab.'
+        extend-account: 'Bitte verlängern Sie Ihren Account, um weiterhin Zugriff auf die Plattform zu haben:'
+    submit: 'Account um 1 Jahr verlängern'
+        
+email:
+    subject: 'Account-Verlängerung'
+    title: 'Dein Account läuft bald ab!'
+    body: 'Dein Nutzer-Account läuft bald ab und wird am deletionDate automatisch gelöscht. Damit werden auch all deine Aufgaben, Videos und Materialien vom System entfernt.'
+    call-to-action: 'Deinen Account kannst du auf der Degree Plattform verlängern:'
+    link: 'Account verlängern'
+    ignore: 'Wenn du deinen Account nicht mehr benötigst, kannst du diese E-Mail ignorieren.'
+    no-reply-notice: 'Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht auf diese E-Mail.'
+
+flash-message:
+    success: 'Dein Account wurde erfolgreich verlängert.'
+    error:
+        not-authenticated: 'Du musst angemeldet sein, um deinen Account zu verlängern.'
+        not-now: 'Dein Account kann vorerst nicht weiter verlängert werden.'

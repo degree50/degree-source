@@ -1,0 +1,50 @@
+// in overlay
+.short-cut-configuration__info-block {
+    * + * {
+        margin-left: $theme__spacing--small;
+    }
+
+    span {
+        color: $theme__color__grey;
+    }
+
+    i {
+        color: $theme__color__primary;
+    }
+}
+
+.short-cut-configuration__title {
+    * + * {
+        margin-left: $theme__spacing--small;
+    }
+
+    .hot-key-text {
+        color: $theme__color__grey;
+    }
+}
+
+.short-cut-configuration {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    align-items: center;
+    justify-items: flex-end;
+
+    .short-cut-configuration__modifier {
+        padding: 0 $theme__spacing--small;
+    }
+
+    .short-cut-configuration__modifier-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        align-items: center;
+
+        input {
+            margin-right: $theme__spacing--small;
+        }
+    }
+
+    .short-cut-configuration__key {
+        width: 50px;
+        margin-left: $theme__spacing--small;
+    }
+}

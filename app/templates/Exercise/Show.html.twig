@@ -1,0 +1,48 @@
+{% extends 'BaseWithSidebar.html.twig' %}
+
+{% block title %}{{ exercise.name }}{% endblock %}
+
+{% block sidebar %}
+    {{ include('Exercise/PhasesSidebar.html.twig', {sidebarItems: phases, currentItemId: false, showSolution: false, testMode: testMode}) }}
+{% endblock %}
+
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block body %}
+    {% if testMode %}
+        <div class="striped-banner">
+            <span class="striped-banner__text">{{ "exercise.labels.testInfo"|trans({}, 'DegreeBase') }}</span>
+        </div>
+    {% endif %}
+    <h5 class="text-center">{{ "common.exercise"|trans({}, 'DegreeBase') }}:</h5>
+    <h2 class="text-center">{{ exercise.name }}</h2>
+    <hr role="presentation"/>
+
+    <h5>{{ "common.task"|trans({}, 'DegreeBase') }}:</h5>
+    <p class="text-center text-small">
+        {{ exercise.description | raw }}
+    </p>
+
+    <hr role="presentation"/>
+    <h5>{{ "exercise.show.overview"|trans({}, 'DegreeBase') }}:</h5>
+    <ul class="list">
+        {% for phase in exercise.phases %}
+            <li>
+                {{ loop.index }}: {{ phase.name }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block footer %}
+    {{ include('Exercise/Footer.html.twig', {
+        exercise: exercise,
+        exercisePhase: exercisePhase,
+        showPhasesProgression: false,
+        currentPhaseIndex: -1,
+        amountOfPhases: amountOfPhases,
+        previousExercisePhase: previousExercisePhase,
+        nextExercisePhase: nextExercisePhase,
+        testMode: testMode
+    }) }}
+{% endblock %}

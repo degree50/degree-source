@@ -1,0 +1,41 @@
+.multilane {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100%;
+
+    padding: 0;
+}
+
+.multilane__medialane-description {
+    padding: 5px;
+}
+
+.multilane__content {
+    overflow: auto;
+}
+
+.multilane-filter-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+    overflow: auto;
+}
+
+.multilane-filter-container__toggle {
+    height: 100%;
+    padding: $theme__spacing--small;
+}
+
+.multilane-filter__content {
+    width: 400px;
+    overflow: auto;
+
+    > * {
+        padding-left: $theme__spacing--base;
+        padding-right: $theme__spacing--base;
+    }
+
+    > h2 {
+        margin-top: $theme__spacing--base;
+    }
+}

@@ -1,0 +1,103 @@
+.form-control {
+    border-radius: 0;
+}
+
+.form-group {
+    .tiles {
+        max-height: 440px;
+        overflow-y: scroll;
+    }
+}
+
+.form-collection {
+    > fieldset > .col-form-label {
+        display: none;
+    }
+
+    > fieldset > div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .form-group {
+            width: 45%;
+            flex-basis: 45%;
+        }
+    }
+
+    .col-form-label {
+        padding: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    > .form-group {
+        padding: 10px;
+
+        background-color: $theme__color__grey;
+        border: 1px solid $theme__color__grey--dark;
+    }
+}
+
+select[multiple] {
+    min-height: 200px;
+}
+
+.searchable-select-field__list {
+    max-height: 200px;
+    padding: $theme__spacing--base;
+    overflow-y: auto;
+}
+
+.searchable-select-field__input {
+    margin-bottom: $theme__spacing--small;
+}
+
+.form__data-privacy {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0.375rem 0.75rem;
+
+    border: 1px solid $theme__color__grey--light;
+    border-radius: 4px;
+}
+
+label {
+    margin: 0;
+}
+
+label.required:before {
+    content: '*';
+}
+
+.input-group-text {
+    border-radius: 0;
+}
+
+input[type='color'] {
+    width: 40px !important;
+    padding: 0;
+}
+
+.video-code-form {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-bottom: 20px;
+
+    .button {
+        white-space: nowrap;
+    }
+
+    input {
+        margin-right: 10px;
+    }
+
+    input[type='text'] {
+        flex: 1;
+    }
+}
+
+// min height for ckeditor to avoid jumping ui
+input[data-controller='ckeditor']:not(.ckeditor-loaded) {
+    min-height: 100px;
+}

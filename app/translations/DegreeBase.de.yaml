@@ -1,0 +1,396 @@
+# for VichUploaderBundle
+form:
+    label:
+        delete: 'Löschen'
+        download: 'Datei herunterladen'
+
+common:
+    degree: 'Degree 4.0'
+    logoAltText: 'Logo der TU Dortmund'
+    videoLearningPlatform: 'Video-Lernplattform'
+    logout: 'Logout'
+    back: 'Zurück'
+    safeAndBack: 'Speichern und Zurück'
+    previousPhase: 'Vorherige Phase'
+    nextPhase: 'Nächste Phase'
+    phase: 'Phase'
+    phases: 'Phasen'
+    status: 'Status'
+    dataPrivacy: 'Datenschutzerklärung'
+    imprint: 'Impressum'
+    termsOfUse: 'Nutzungsbedingungen'
+    testingOf: 'Testen von '
+    exercise: 'Aufgabe'
+    task: 'Aufgabenstellung'
+    name: 'Name'
+    nothingFound: 'Keine vorhanden'
+    filter: 'Filter'
+    hidden: 'Versteckt'
+    public: 'Öffentlich'
+    finished: 'Abgeschlossen'
+    type: 'Typ'
+    hint: 'Hinweis'
+    for: 'für'
+    toggleNavigation: 'Navigation ein-/ausblenden'
+
+security:
+    403:
+        accessDenied: 'Zugriff verweigert'
+        info: 'Du hast leider keine Berechtigung für diese Seite.'
+    dataPrivacy:
+        accept: 'Datenschutzerklärung akzeptieren'
+    termsOfUse:
+        headline: 'Nutzungsbedingungen für die Webplattform degree40.tu-dortmund.de'
+        accept: 'Nutzungsbedingungen akzeptieren'
+    imprint:
+        headline: 'Impressum nach § 5 Abs. 1 Telemediengesetz (TMG)'
+    login:
+        labels:
+            email: 'E-Mail'
+            password: 'Passwort'
+        login-sso: 'Login mit Uni-Account (SSO)'
+        login-directly: 'Direkter Login'
+        register: 'Registrieren'
+
+registration:
+    title: 'Registrierung'
+
+desk:
+    index:
+        title: 'Schreibtisch'
+
+administration:
+    index:
+        title: 'Administration'
+
+exercise:
+    labels:
+        name: 'Titel der Aufgabe'
+        description: 'Lernauftrag / Beschreibung'
+        submit: 'Aufgabe speichern'
+        finish: 'Aufgabe abschließen'
+        created: 'Erstellt'
+        createdLabel: 'Aufgabe erstellt am'
+        status: 'Status'
+        statusLabel: 'Status der Aufgabe'
+        status0: 'Aufgabe Erstellt'
+        status1: 'Aufgabe Abgeschlossen'
+        status2: 'Aufgabe Veröffentlicht'
+        statusNew: 'Neue Aufgabe'
+        statusStarted: 'Aufgabe angefangen'
+        statusFinished: 'Aufgabe abgeschlossen'
+        reviewRequired: "Überprüfung durch lehrende Person erforderlich"
+        phaseDone: 'Phase abgeschlossen'
+        actionsLabel: 'Aktionen'
+        toggleActions: 'Aktionen ein/ausblenden'
+        testInfo: 'Achtung: Aufgabe wird getestet. Bearbeitung ist für andere nicht sichtbar.'
+    show:
+        title: 'Aufgabe starten'
+        overview: 'Übersicht der Phasen'
+    test:
+        title: 'Aufgabe testen'
+    new:
+        back: 'Zurück zur Übersicht'
+        title: 'Neue Aufgabe anlegen'
+        messages:
+            success: 'Aufgabe erfolgreich angelegt!'
+    showSolution:
+        title: 'Lösungen ansehen'
+        messages:
+            error: 'Lösung kann nicht angesehen werden!'
+    edit:
+        title: 'Aufgabe bearbeiten'
+        alreadyUsed: 'Achtung: Aufgabe wird/wurde schon von Lernenden bearbeitet.'
+        publish: 'Aufgabe veröffentlichen'
+        unpublish: 'Aufgabe verstecken'
+        changeSorting: 'Sortierung der Phase ändern'
+        changeSortingUp: 'Phase nach oben sortieren'
+        changeSortingDown: 'Phase nach unten sortieren'
+        messages:
+            success: 'Aufgabe erfolgreich gespeichert!'
+    delete:
+        title: 'Aufgabe löschen'
+        confirm: 'Sind Sie sicher, dass Sie diese Aufgabe löschen möchten?'
+        messages:
+            success: 'Aufgabe erfolgreich gelöscht!'
+    copy:
+        title: 'Aufgabe kopieren'
+        message:
+            success: 'Aufgabe erfolgreich kopert!'
+    showPhase:
+        dependsOnPreviousPhaseInfo: 'Diese Phase baut auf der vorherigen auf. Es muss ein Ergebnis aus der vorherigen Phase vorliegen.'
+        myResult: 'Mein Ergebnis'
+        showResult: 'Ergebnis anzeigen'
+        existingResults: 'Bisherigen Ergebnisse deiner Seminargruppe:'
+        startPhase: 'Phase starten'
+        groupOf: 'Gruppe von'
+        groupMembers: 'Mitglieder'
+        joinGroup: 'Gruppe beitreten'
+        leaveGroup: 'Gruppe verlassen'
+        deleteGroup: 'Gruppe löschen'
+        newGroup: 'Neue Gruppe anlegen'
+        existingGroups: 'Bestehende Gruppen'
+        existingGroupsInfo: 'Tritt einer Gruppe bei um die Aufgabe zu bearbeiten oder erstelle eine neue Gruppe.'
+        nothing: 'Keine vorhanden'
+
+exerciseOverview:
+    index:
+        allExercises: 'Alle Aufgaben'
+        allCourses: 'Alle Kurse'
+        manageCourse: 'Kurs verwalten'
+        filterByStatus: 'Aufgaben filtern nach Status'
+        noCourseAssigned: 'Du bist keinem Kurs zugeordnet'
+    groups:
+        ownExercises: 'Selbst erstellte Aufgaben'
+        otherExercises: 'Bereitgestellte Aufgaben'
+    error:
+        exercise-no-phase: 'Die Aufgabe hat keine Phase!'
+
+exercisePhase:
+    labels:
+        isGroupPhase: 'Ist eine Gruppenarbeit'
+        dependsOnPreviousPhase: 'Nutzt Ergebnis von Phase'
+        dependsOnPreviousPhaseNone: 'Keine'
+        dependsOnPhaseName: 'Nutzt Ergebnis von Phase'
+        otherSolutionsAreAccessible: 'Lernende können gegenseitig Ergebnisse einsehen'
+        name: 'Titel der Phase'
+        task: 'Lernauftrag / Beschreibung'
+        material: 'Material'
+        videos: 'Videos'
+        videosExtended: 'Video für die Aufgabe auswählen'
+        videoCodes: 'Video-Codes'
+        components: 'Zusätzlich Komponenten'
+        attachments: 'Anhänge'
+        submit: 'Phase speichern'
+        type: 'Typ'
+        usesResultFrom: 'Nutzt Ergebnis von Phase'
+    help:
+        isGroupPhase: 'Wenn aktiv, kann diese Phase nur in Gruppen von mindestens 2 Personen bearbeitet werden.'
+        dependsOnPreviousPhase:
+            regular: 'Wenn aktiv, können Lernende beim Bearbeiten ihr Ergebnis dieser Phase einsehen und verwenden.'
+            reflexion: 'Bestimmt die Phase, welche innerhalb der Vergleichsphase begutachtet wird.'
+        otherSolutionsAreAccessible: 'Wenn aktiv, können die Lernenden für diese Phase die Ergebnisse ihrer Mitlernenden einsehen.'
+    types:
+        videoAnalysis:
+            label: 'Videoanalyse'
+            iconClass: 'fas fa-film'
+        videoCutting:
+            label: 'Videoschnitt'
+            iconClass: 'fas fa-cut'
+        reflexion:
+            label: 'Vergleich'
+            iconClass: 'fas fa-book-open'
+        material:
+            label: 'Dokumentation'
+            iconClass: 'fas fa-square-quote'
+    components:
+        videoPlayer:
+            label: 'Videoplayer'
+        videoCutting:
+            label: 'Videoschnitt'
+        chat:
+            label: 'Chat'
+        documentUpload:
+            label: 'Dokumenten-Upload'
+        videoCode:
+            label: 'Videocodierung'
+        sharedDocument:
+            label: 'Geteiltes Dokument'
+        videoAnnotation:
+            label: 'Videoannotation'
+    new:
+        back: 'Zurück zur Aufgabe'
+        title: 'Phase hinzufügen'
+        titleForGroupPhase: 'Gruppenphase hinzufügen'
+    test:
+        title: 'Phase testen'
+        reset: 'Test Ergebnis zurücksetzen'
+    show:
+        finish: 'Phase abschließen'
+        test: 'Testen von Phase'
+        messages:
+            confirmFinish: 'Nach Abschluss dieser Dokumentationsphase kann das Ergebnis nicht mehr angepasst werden. Das Material wird dann von einer lehrenden Person begutachtet. Zum Zwischenspeichern des Ergebnisses bitte auf "Speichern und Zurück" klicken.\n\n Fortfahren?'
+            confirmFinish2: 'Nach Abschluss einer Dokumentationsphase kann das Ergebnis nicht mehr angepasst werden. Zum Zwischenspeichern des Ergebnisses bitte auf "Speichern und Zurück" klicken.\n\n Fortfahren?'
+    edit:
+        title: 'Phase bearbeiten'
+        button: 'Bearbeiten'
+        attachmentInfo: 'Anhang hochladen, der zur Lösung der Aufgabe bereit steht'
+        attachmentAccessabilityInfo: 'Achten Sie unbedingt darauf, dass die Dokumente barrierefrei sind.'
+        uploadAttachment: 'Hier klicken um Anhänge hochzuladen'
+        uploadAttachmentInfo: 'Hinweis: Kommt es zu Timeout-Fehlern beim Upload, ist die Upload-Geschwindigkeit geringer als 0,5 Mbit/s. Lade das Video an einem schnelleren Internetanschluss hoch.'
+        attachments: 'Bereits hochgeladene Dateien'
+        noAttachments: 'Noch keine'
+        deleteAttachment: 'Datei löschen'
+        alreadyStarted: 'Achtung: Phase wird/wurde schon von Lernenden bearbeitet.'
+        componentsInfo: 'Aktive Komponenten zur Lösung der Aufgabe:'
+        videoCodesInfo: 'Stehen dem Nutzer zur Auswahl während der Aufgabe'
+        videoCodeColor: 'Farbe des Video-Codes'
+        videoCodeName: 'Name des Video-Codes'
+        addVideoCode: 'Video-Code hinzufügen'
+        messages:
+            success: 'Phase erfolgreich gespeichert!'
+    delete:
+        title: 'Phase löschen'
+        button: 'Löschen'
+        confirm: 'Sind Sie sicher, dass Sie diese Phase löschen möchten?'
+        messages:
+            success: 'Phase erfolgreich gelöscht!'
+    resetTest:
+        messages:
+            success: 'Test Ergebnis erfolgreich zurückgesetzt!'
+    showSolution:
+        shareResult: 'Ergebnis teilen'
+    showSolutions:
+        title: 'Lösungen'
+        back: 'Zurück zur Übersicht'
+        phaseHasNoSolutions: 'Dieser Phasentyp hat keine Lösungen'
+        noSolutions: 'Es gibt noch keine Lösungen'
+    videoCodesList:
+        delete: 'Video-Code löschen'
+        noVideoCodes: 'Keine Video Codes vorhanden.'
+
+exercisePhaseTeam:
+    new:
+        messages:
+            success: 'Neue Gruppe angelegt!'
+            alreadyCreatedATeam: 'Du hast bereits eine Gruppe angelegt!'
+    join:
+        messages:
+            success: 'Gruppe beigetreten'
+    delete:
+        messages:
+            hasSolution: 'Gruppe kann nicht gelöscht werden. Es gibt bereits ein Ergebnis.'
+            success: 'Gruppe gelöscht'
+    leave:
+        messages:
+            success: 'Gruppe verlassen'
+
+video:
+    labels:
+        title: 'Titel'
+        titleLabel: 'Name des Videos'
+        created: 'Erstellt'
+        createdLabel: 'Video erstellt am'
+        statusPrivate: 'Video ist privat'
+        statusPublic: 'Video ist öffentlich'
+        statusLabel: 'Status des Videos'
+        description: 'Beschreibung'
+        personalNotes: 'Persönliche Notizen zum Video'
+        courses: 'Kurse mit Berechtigung für dieses Video'
+        dataPrivacyAccepted: 'Ich bestätige, dass dieser Upload den Datenschutzbestimmungen und den Nutzungsbedingungen entspricht.'
+        dataPrivacyPermissionsAccepted: 'Ich bestätige, dass die datenschutzrechtliche Einwilligung der betroffenen Personen schriftlich eingeholt wurde, bei minderjährigen Betroffenen von deren gesetzlichen Vertretern, und wirksam vorliegt. Die Betroffenen wurden über ihre Rechte im Rahmen der Datenschutzgrundverordnung informiert. Weiterhin bestätige ich, dass die hochgeladenen Inhalte (insbesondere Videos) mit pseudonymisierten Informationen über die abgebildeten oder zu hörenden Personen versehen wurden.'
+        submit: 'Video speichern'
+        previewImage: 'Vorschaubild des Videos'
+        actionsLabel: 'Aktionen'
+        toggleActions: 'Aktionen ein/ausblenden'
+    help:
+        courses: 'Das Video kann nur von den jeweiligen Lernenden des Kurses angeschaut werden. Ohne ausgewählte Kurse ist das Video privat.'
+    upload:
+        title: 'Video hochladen'
+        back: 'Zurück zur Übersicht'
+        subtitleUploadTitle: 'Untertitel hochladen (optional)'
+        audioDescriptionUploadTitle: 'Audiodeskription hochladen (optional)'
+        uploadVideo: 'Hier klicken um Video hochzuladen'
+        uploadSubtitle: 'Hier klicken um Untertitel hochzuladen'
+        uploadAudioDescription: 'Hier klicken um Audio-Datei hochzuladen'
+        supportedFormats: 'Unterstützte Formate:'
+        videoFormats: 'mp4, mov'
+        subtitlesFormats: 'WebVTT'
+        audioDescriptionFormats: 'mp3'
+        subtitlesOptional: 'Untertitel sind optional, können aktuell aber NICHT im Nachhinein hinzugefügt werden.'
+        audioDescriptionOptional: 'Audio Deskriptionen sind optional, können aktuell aber NICHT im Nachhinein hinzugefügt werden.'
+        timeoutHint: 'Kommt es zu Timeout-Fehlern beim Upload ist die Upload-Geschwindigkeit zu gering. Lade das Video an einem schnelleren Internetanschluss hoch.'
+        messages:
+            success: 'Video erfolgreich hochgeladen. Das Encoding wurde gestartet.'
+    show:
+        title: 'Video abspielen'
+        notAssigned: 'Achtung: Video ist aktuell keinen Kursen zugewiesen und nur für dich sichtbar.'
+    favor:
+        title: 'Favorisieren'
+    unfavor:
+        title: 'Entfavorisieren'
+    index:
+        title: 'Mediathek'
+        allVideos: 'Alle Videos'
+    new:
+        title: 'Neues Video'
+    edit:
+        title: 'Video bearbeiten'
+        videoEncodingFailed: 'Video-Encoding fehlgeschlagen...'
+        isEncoding: 'Video-Encoding läuft noch. Dieser Prozess kann mehrere Minuten in Anspruch nehmen. Je nach Länge des Videos.'
+        messages:
+            success: 'Video erfolgreich gespeichert!'
+    delete:
+        title: 'Video löschen'
+        usage: 'Das Video wird in folgenden Aufgaben/Phasen verwendet'
+        noUsage: 'Das Video wird in keiner Aufgabe/Phase verwendet.'
+        warning: 'Achtung: Alle Video-Schnitte basierend auf diesem Video werden ebenfalls gelöscht.'
+        hasSolutions: 'Hat Lösungen'
+        messages:
+            success: 'Video erfolgreich gelöscht!'
+
+attachments:
+    labels:
+        name: 'Name des Dokuments/Anhangs'
+        file: 'Datei'
+        selectFile: 'Datei auswählen'
+    delete:
+        messages:
+            success: 'Datei erfolgreich gelöscht!'
+
+course:
+    labels:
+        name: 'Name'
+        role: 'Rolle'
+        submit: 'Kurs speichern'
+        addMember: 'Lernende speichern'
+        student: 'Lernende:r'
+        students: 'Lernende'
+        currentStudents: 'Aktuelle Lernende'
+        tutor: 'Lehrende:r'
+        tutors: 'Lehrende'
+        currentTutors: 'Aktuelle Lehrende'
+        filterTutors: 'Lehrende filtern'
+        filterTutorsAria: 'Lehrende filtern durch Texteingabe'
+        filterStudents: 'Lernende filtern'
+        filterStudentsAria: 'Lernende filtern durch Texteingabe'
+        fachbereich: 'zu Fachbereich hinzufügen'
+    index:
+        title: 'Kurs-Übersicht'
+    new:
+        title: 'Kurs anlegen'
+        back: 'Zurück zur Übersicht'
+        messages:
+            success: 'Kurs erfolgreich angelegt!'
+            missingDozent: 'Es muss mindestens eine:n Lehrende:n pro Kurs geben!'
+    edit:
+        title: 'Kurs bearbeiten'
+        messages:
+            success: 'Kurs erfolgreich gespeichert!'
+    exportCSV:
+        title: 'CSV exportieren'
+    editMembers:
+        title: 'Lernende verwalten'
+        canCreate: 'Darf Aufgaben Erstellen'
+        messages:
+            success: 'Lernende erfolgreich gespeichert!'
+    help:
+        students: 'Hier können Lernende ausgewählt werden (mehrfach-Auswahl) die Aufgaben dieses Kurses bearbeiten können.'
+        tutors: 'Hier können Lehrende ausgewählt werden (mehrfach-Auswahl) die Aufgaben für diesen Kurs erstellen können.'
+    upgradeMember:
+        title: 'Darf Aufgabe erstellen'
+    downgradeMember:
+        title: 'Darf keine Aufgabe erstellen'
+    removeMember:
+        title: 'Entfernen'
+        messages:
+            notPossible: 'Nicht möglich: Es muss mindestens eine:n Lehrende:n pro Kurs geben!'
+    delete:
+        title: 'Kurs löschen'
+        messages:
+            success: 'Kurs erfolgreich gelöscht!'
+            notPossible: 'Kurs kann nicht gelöscht werden, so lange Aufgaben zugewiesen sind!'
+mediathek:
+    groups:
+        ownVideos: 'Selbst erstellte Videos'
+        otherVideos: 'Bereitgestellte Videos'

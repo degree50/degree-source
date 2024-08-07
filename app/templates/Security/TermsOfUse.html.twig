@@ -1,0 +1,15 @@
+{% extends 'BaseWithHeaderWithoutNavigation.html.twig' %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="content-header">
+            <h1>{{ "security.termsOfUse.headline"|trans({}, 'DegreeBase') }}</h1>
+        </header>
+        {{ include('Partials/TermsOfUseContent.html.twig') }}
+    </div>
+    <footer class="footer footer--center">
+        <a class="button button--type-primary footer__center" href="{{ path('app_terms-of-use', {accepted: true}) }}" role="link">{{ "security.termsOfUse.accept"|trans({}, 'DegreeBase') }}</a>
+    </footer>
+{% endblock %}
+

@@ -1,0 +1,93 @@
+##################################################
+##### DEVELOPMENT ENVIRONMENT           ##########
+##################################################
+
+services:
+    degree:
+        build:
+            context: ./
+            dockerfile: deployment/docker/Dockerfile
+            args:
+                NGINX_SELF_SIGNED_CERT_FQDN: "${NGINX_SELF_SIGNED_CERT_FQDN}"
+                CREATE_NGINX_SELF_SIGNED_CERT: 1
+        ports:
+            - 8080:8080
+            # Port for App running with test db for e2e tests @see nginx-e2e-test-server.conf
+            - 9090:9090
+            # if you add a hosts entry for "<FQDN of prod application> 127.0.0.1", you can test the SAML authentication locally
+            # see .env for FQDN
+            - 443:443
+        depends_on:
+            - db
+            - redis
+            - mailpit
+        environment:
+            LOCAL_DEVELOPMENT: 1
+            # Used for CLI and for web port :8080
+            # Webport :9090 (testing is using "test" instead -> see "nginx-e2e-test-server.conf")
+            APP_ENV: "dev"
+
+            # configured in ./.env
+            APP_SECRET: "${APP_SECRET}"
+            DATABASE_URL: "mysql://degree:${MYSQL_PASSWORD}@db/degree"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            LIVE_SYNC_JWT_PRIVATE_SIGNING_KEY: "${JWT_KEY}"
+            JWT_KEY: "${JWT_KEY}"
+            MAILER_DSN: "${MAILER_DSN}"
+            MAILER_SENDER_ADDRESS: "${MAILER_SENDER_ADDRESS}"
+            MAILER_SENDER_NAME: "${MAILER_SENDER_NAME}"
+            TRUSTED_HOSTS: "${TRUSTED_HOSTS}"
+            SAML_BASE_URL: "${SAML_BASE_URL}"
+            SAML_IDP_ENTITY_ID: "${SAML_IDP_ENTITY_ID}"
+            SAML_IDP_SSO_URL: "${SAML_IDP_SSO_URL}"
+            SAML_IDP_SLS_URL: "${SAML_IDP_SLS_URL}"
+            SAML_IDP_CERT: "${SAML_IDP_CERT}"
+            SAML_SP_ENTITY_ID: "${SAML_SP_ENTITY_ID}"
+            SAML_SP_ACS_URL: "${SAML_SP_ACS_URL}"
+            SAML_SP_SLS_URL: "${SAML_SP_SLS_URL}"
+            SAML_CONTACT_NAME: "${SAML_CONTACT_NAME}"
+            SAML_CONTACT_EMAIL: "${SAML_CONTACT_EMAIL}"
+        volumes:
+            - ./app:/app:rw,cached
+            - app-var:/app/var
+
+    redis:
+        image: redis:7.2-alpine3.19
+        ports:
+            - 16379:6379
+
+    redis-ui:
+        image: rediscommander/redis-commander
+        environment:
+            REDIS_HOSTS: 'redis:redis:6379:0'
+            PORT: 8900
+        ports:
+            - 8002:8900
+
+    db:
+        image: mariadb:10.11.7
+        ports:
+            - 13306:3306
+        environment:
+            MYSQL_DATABASE: "degree"
+            MYSQL_USER: "degree"
+            # configured in ./.env
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+        volumes:
+            - db-data:/var/lib/mysql:rw
+            - ./deployment/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+        # use Unicode encoding as default!
+        command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+    #####
+    # Mailpit (local smtp)
+    mailpit:
+        image: axllent/mailpit:v1.19
+        hostname: mailpit
+        ports:
+            - '8025:8025'
+
+volumes:
+    app-var: { }
+    db-data: { }

@@ -1,0 +1,19 @@
+{% extends 'BaseNoHeader.html.twig' %}
+{% trans_default_domain 'UserPasswordReset' %}
+
+{% block title %}{{ "common.degree"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ "form.request.title"|trans }}</h1>
+
+        {{ form_start(requestForm) }}
+            {{ form_row(requestForm.email) }}
+            <div>
+                <small>{{ "form.request.info"|trans }}</small>
+            </div>
+
+            <button class="btn btn-primary">{{ "form.request.submit"|trans }}</button>
+        {{ form_end(requestForm) }}
+    </div>
+{% endblock %}

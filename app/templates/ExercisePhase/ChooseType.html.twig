@@ -1,0 +1,44 @@
+{% extends 'BaseFullscreen.html.twig' %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block title %}{{ "exercisePhase.new.title"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('exercise-overview', {id: exercise.course.id}) }}">
+                        {{ exercise.course.name }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('exercise__edit', {id: exercise.id}) }}">
+                        {{ exercise.name }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ "exercisePhase.new.title"|trans({}, 'DegreeBase') }}</li>
+            </ol>
+        </nav>
+
+        <header class="content-header content-header--center">
+            <h3>{{ "exercisePhase.new.title"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+
+        <div class="tiles">
+            {% for type in types %}
+                <a href="{{ path('exercise-phase__set-type', {id: exercise.id, type: type.id }) }}" class="tile">
+                    <div class="tile__content">
+                        <i class="tile__icon {{ type.iconClass}}"></i>
+                        <span>{{ type.label }}</span>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="footer">
+        <a class="button button--type-outline-primary footer__left" href="{{ path('exercise__edit', {id: exercise.id}) }}">{{ "exercisePhase.new.back"|trans({}, 'DegreeBase') }}</a>
+    </footer>
+
+{% endblock %}

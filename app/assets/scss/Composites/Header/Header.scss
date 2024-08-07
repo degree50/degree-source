@@ -1,0 +1,9 @@
+.main-header {
+    position: fixed;
+    width: 100%;
+
+    background-color: $theme__color__white;
+    border-bottom: 4px solid $theme__color__primary;
+
+    z-index: 9000;
+}

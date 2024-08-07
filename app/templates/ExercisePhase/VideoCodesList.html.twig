@@ -1,0 +1,33 @@
+<ul class="video-codes-list">
+    {% for videoCode in videoCodes %}
+        <li
+            class="video-codes-list-item"
+            tabindex="0"
+            {#
+                WHY: We need these in the frontend to generate a aria-label that also reads the name of the color - not the hex value
+                see issue: https://gitlab.sandstorm.de/degree-4.0/code/-/issues/241
+            #}
+            data-code-name="{{ videoCode.name }}"
+            data-code-color="{{ videoCode.color }}"
+        >
+            <div
+                class="video-code__content">
+                <div class="video-code__color" style="background-color: {{ videoCode.color }};"></div>
+                <span class="video-code__name">
+                    {{ videoCode.name }}
+                </span>
+                <a
+                    data-controller="deleteEntity"
+                    href="{{ path('video-code__delete', {id: videoCode.id}) }}"
+                    class="button button--type-danger button--size-small"
+                >
+                    <i class="fas fa-trash-alt"></i> {{ "exercisePhase.videoCodesList.delete"|trans({}, 'DegreeBase') }}
+                </a>
+            </div>
+        </li>
+    {% else %}
+        <li>
+            {{ "exercisePhase.videoCodesList.noVideoCodes"|trans({}, 'DegreeBase') }}
+        </li>
+    {% endfor %}
+</ul>

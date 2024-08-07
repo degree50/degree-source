@@ -1,0 +1,36 @@
+.team {
+    display: inline-block;
+    width: 100%;
+    min-height: 100px;
+
+    > header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+
+        font-weight: bold;
+        font-size: $base__fontSize--smaller;
+    }
+
+    &:nth-child(even) {
+        background-color: $theme__color__grey;
+    }
+}
+
+.team__solution {
+    padding: 10px;
+    padding-top: 0;
+}
+
+.team__solution-headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h5 {
+        margin: 0;
+
+        font-size: $base__fontSize--smaller;
+    }
+}

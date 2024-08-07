@@ -1,0 +1,32 @@
+# Read the documentation: https://github.com/1up-lab/OneupUploaderBundle/blob/master/Resources/doc/index.md
+oneup_uploader:
+    mappings:
+        uploaded_videos:
+            frontend: dropzone
+            storage:
+                type: flysystem
+                filesystem: oneup_flysystem.uploaded_videos_filesystem
+        uploaded_subtitles:
+            frontend: dropzone
+            storage:
+                type: flysystem
+                filesystem: oneup_flysystem.uploaded_subtitles_filesystem
+        uploaded_audio_descriptions:
+            frontend: dropzone
+            storage:
+                type: flysystem
+                filesystem: oneup_flysystem.uploaded_audio_descriptions_filesystem
+        uploaded_attachment:
+            frontend: dropzone
+            storage:
+                type: flysystem
+                filesystem: oneup_flysystem.uploaded_attachment_filesystem
+
+    orphanage:
+        maxage: 86400
+        directory: '%kernel.cache_dir%/uploader/orphanage'
+
+    chunks:
+        maxage: 86400
+        storage:
+            directory: '%kernel.cache_dir%/uploader/chunks'

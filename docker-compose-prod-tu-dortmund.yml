@@ -1,0 +1,115 @@
+##################################################
+##### PRODUCTION ENVIRONMENT           ##########
+##################################################
+
+services:
+    traefik:
+        image: traefik:v2.11
+        restart: always
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /home/deployment/data/traefik:/data
+        command:
+            # discover docker labels automatically
+            - --providers.docker=true
+
+            # enable both HTTP and HTTPS entrypoints
+            - --entryPoints.web.address=:80
+            - --entryPoints.websecure.address=:443
+
+            # redirect all HTTP traffic to HTTPS
+            - --entryPoints.web.http.redirections.entrypoint.to=websecure
+            - --entrypoints.web.http.redirections.entryPoint.scheme=https
+
+            # configure Let's Encrypt resolver named "letsencrypt"
+            - --certificatesResolvers.letsencrypt.acme.email=${LETS_ENCRYPT_EMAIL}
+            - --certificatesResolvers.letsencrypt.acme.storage=/data/acme.json
+            - --certificatesResolvers.letsencrypt.acme.httpChallenge.entryPoint=web
+            # comment-in the next line for using a staging let's encrypt endpoint for testing
+            #- --certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+        container_name: traefik
+
+    degree:
+        image: ${DOCKER_IMAGE_DEGREE}
+        restart: always
+        labels:
+            - "traefik.http.routers.degree.rule=Host(`${DEGREE_HOST}`)"
+            # enable let's encrypt
+            - "traefik.http.routers.degree.tls=true"
+            - "traefik.http.routers.degree.tls.certresolver=letsencrypt"
+            - "traefik.http.services.degree.loadbalancer.server.port=8080"
+        environment:
+            APP_ENV: "prod"
+            SHELL_ENV_DISPLAY: "production"
+
+            # configured in ./.env
+            APP_SECRET: "${APP_SECRET}"
+            DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}"
+            LIVE_SYNC_JWT_PRIVATE_SIGNING_KEY: "${JWT_KEY}"
+            JWT_KEY: "${JWT_KEY}"
+            MAILER_DSN: "${MAILER_DSN}"
+            MAILER_SENDER_ADDRESS: "${MAILER_SENDER_ADDRESS}"
+            MAILER_SENDER_NAME: "${MAILER_SENDER_NAME}"
+            TRUSTED_HOSTS: "${TRUSTED_HOSTS}"
+            SAML_BASE_URL: "${SAML_BASE_URL}"
+            SAML_IDP_ENTITY_ID: "${SAML_IDP_ENTITY_ID}"
+            SAML_IDP_SSO_URL: "${SAML_IDP_SSO_URL}"
+            SAML_IDP_SLS_URL: "${SAML_IDP_SLS_URL}"
+            SAML_IDP_CERT: "${SAML_IDP_CERT}"
+            SAML_SP_ENTITY_ID: "${SAML_SP_ENTITY_ID}"
+            SAML_SP_ACS_URL: "${SAML_SP_ACS_URL}"
+            SAML_SP_SLS_URL: "${SAML_SP_SLS_URL}"
+            SAML_CONTACT_NAME: "${SAML_CONTACT_NAME}"
+            SAML_CONTACT_EMAIL: "${SAML_CONTACT_EMAIL}"
+        ports:
+            - 8080
+        depends_on:
+            - db
+        volumes:
+            - /home/deployment/data/app/var/log:/app/var/log
+            - /home/deployment/data/app/var/data:/app/var/data
+            - /home/deployment/data/app/public/data:/app/public/data
+            - /home/deployment/data/app/config/secrets:/app/config/secrets
+
+    redis:
+        image: redis:7.2-alpine3.19
+        restart: always
+        ports:
+            # Redis will only be exposed to LOCALHOST, so it can be accessed via SSH tunnel
+            - 127.0.0.1:6379:6379
+
+    redis-ui:
+        image: rediscommander/redis-commander
+        restart: always
+        environment:
+            REDIS_HOSTS: "redis:redis:6379:0"
+            PORT: 8900
+        ports:
+            - 8900
+
+    #####
+    # DB
+    db:
+        image: mariadb:10.11.7
+        restart: always
+        ports:
+            # MySQL will only be exposed to LOCALHOST, so it can be accessed via SSH tunnel
+            - 127.0.0.1:3306:3306
+        environment:
+            # configured in ./.env
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+        volumes:
+            - /home/deployment/data/mysql:/var/lib/mysql:rw
+
+networks:
+    default:
+        ipam:
+            config:
+                # must match TRUSTED_PROXIES .env
+                -   subnet: 172.16.0.0/16

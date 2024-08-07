@@ -1,0 +1,178 @@
+{% extends 'BaseFullscreen.html.twig' %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+
+{% block title %}{{ "exercise.edit.title"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('exercise-overview', {id: exercise.course.id}) }}">
+                        {{ exercise.course.name }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ "exercise.edit.title"|trans({}, 'DegreeBase') }}</li>
+            </ol>
+        </nav>
+
+        <header class="content-header">
+            <h3>{{ "exercise.edit.title"|trans({}, 'DegreeBase') }}</h3>
+            {% if exerciseHasSolutions %}
+                <div class="alert alert-warning">
+                    {{ "exercise.edit.alreadyUsed"|trans({}, 'DegreeBase') }}
+                </div>
+            {% endif %}
+        </header>
+        <p>
+            {% set statusTransVar = 'exercise.labels.status' ~ (exercise.status) %}
+            <strong>{{ "common.status"|trans({}, 'DegreeBase') }}: </strong> {{ statusTransVar | trans({}, 'DegreeBase') }}
+            {% if exercise.status == 0 %}
+                <a href="{{ path('exercise__change-status', {id: exercise.id, status: 2}) }}"
+                   class="button button--type-primary button--size-small">{{ "exercise.edit.publish"|trans({}, 'DegreeBase') }}</a>
+            {% elseif exercise.status == 2 %}
+                <a href="{{ path('exercise__change-status', {id: exercise.id, status: 0}) }}"
+                   class="button button--type-danger button--size-small">{{ "exercise.edit.unpublish"|trans({}, 'DegreeBase') }}</a>
+            {% endif %}
+        </p>
+        <div class="exercise-form">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+
+            <div class="exercise-form__table-header">
+                <h5>{{ "common.phases"|trans({}, 'DegreeBase') }} ({{ exercise.phases|length }})</h5>
+                <a class="button button--type-primary button--size-small"
+                   href="{{ path('exercise-phase__new', {id: exercise.id}) }}">
+                    <i class="fas fa-plus"></i> {{ "exercisePhase.new.title"|trans({}, 'DegreeBase') }}
+                </a>
+            </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>{{ "exercisePhase.labels.type"|trans({}, 'DegreeBase') }}</th>
+                    <th>{{ "exercisePhase.labels.name"|trans({}, 'DegreeBase') }}</th>
+                    <th>{{ "exercisePhase.labels.dependsOnPhaseName"|trans({}, 'DegreeBase') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                {% for exercisePhase in exercisePhases %}
+                    {% set phaseTypeTransVar = 'exercisePhase.types.' ~ (exercisePhase.phase.type.value) ~ '.label' %}
+                    <tr>
+                        <td class="table-cell--no-wrap">
+                            {% if exercisePhase.phase.isGroupPhase %}
+                                <i class="fas fa-users"
+                                   title="{{ "exercisePhase.labels.isGroupPhase"|trans({}, 'DegreeBase') }}"></i>
+                            {% else %}
+                                <i class="fas fa-user"></i>
+                            {% endif %}
+                            {% if exercisePhase.phase.dependsOnExercisePhase %}
+                                <i class="fas fa-arrow-up"
+                                   title="{{ "exercisePhase.labels.usesResultFrom"|trans({}, 'DegreeBase') }} '{{ exercisePhase.phase.dependsOnExercisePhase.name }}'"></i>
+                            {% endif %}
+                        </td>
+                        <td>{{ phaseTypeTransVar | trans({}, 'DegreeBase') }}</td>
+                        <td>{{ exercisePhase.phase.name }}</td>
+                        <td>
+                            {% if exercisePhase.phase.dependsOnExercisePhase %}
+                                {{ exercisePhase.phase.dependsOnExercisePhase.name }}
+                            {% endif %}
+                        </td>
+                        <td class="table-cell--no-wrap text-right">
+                            {% if exercisePhase.phase.hasSolutions %}
+                                <a class="button button--type-outline-danger disabled button--size-small">
+                                    <i class="fas fa-trash-alt"></i> {{ "exercisePhase.delete.button"|trans({}, 'DegreeBase') }}
+                                </a>
+                            {% else %}
+                                <a
+                                    class="button button--type-outline-danger button--size-small"
+                                    href="{{ path('exercise-phase__delete', {id: exercise.id, phase_id: exercisePhase.phase.id}) }}"
+                                    onclick="return confirm('{{ "exercisePhase.delete.confirm"|trans({}, 'DegreeBase') }}');"
+                                >
+                                    <i class="fas fa-trash-alt"></i> {{ "exercisePhase.delete.button"|trans({}, 'DegreeBase') }}
+                                </a>
+                            {% endif %}
+                            <a class="button button--type-primary button--size-small"
+                               href="{{ path('exercise-phase__edit', {id: exercise.id, phase_id: exercisePhase.phase.id}) }}"
+                               data-test-id="exercisePhaseEditButton"
+                            >
+                                <i class="fas fa-pencil-alt"></i> {{ "exercisePhase.edit.button"|trans({}, 'DegreeBase') }}
+                            </a>
+
+                            <div class="button-group" role="group" aria-label="{{ "exercise.edit.changeSorting"|trans({}, 'DegreeBase') }}">
+                                {% if exercisePhase.canMoveUp != true %}
+                                    <button
+                                        class="button button--type-outline-primary button--size-small"
+                                        disabled="disabled"
+                                        aria-disabled="true"
+                                        title="{{ "exercise.edit.changeSortingUp"|trans({}, 'DegreeBase') }}"
+                                        data-test-id="movePhaseUp"
+                                    >
+                                        <i class="fas fa-arrow-up"></i>
+                                    </button>
+                                {% else %}
+                                    <a
+                                        class="button button--type-outline-primary button--size-small"
+                                        title="{{ "exercise.edit.changeSortingUp"|trans({}, 'DegreeBase') }}O"
+                                        href="{{ path('exercise-phase__change-sorting', {id: exercise.id, phase_id: exercisePhase.phase.id, sortUp: true}) }}"
+                                        data-test-id="movePhaseUp"
+                                    >
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                {% endif %}
+
+                                {% if exercisePhase.canMoveDown != true %}
+                                    <button
+                                        class="button button--type-outline-primary button--size-small"
+                                        disabled="disabled"
+                                        aria-disabled="true"
+                                        title="{{ "exercise.edit.changeSortingDown"|trans({}, 'DegreeBase') }}"
+                                        data-test-id="movePhaseDown"
+                                    >
+                                        <i class="fas fa-arrow-down"></i>
+                                    </button>
+                                {% else %}
+                                    <a
+                                        class="button button--type-outline-primary button--size-small"
+                                        title="{{ "exercise.edit.changeSortingDown"|trans({}, 'DegreeBase') }}"
+                                        href="{{ path('exercise-phase__change-sorting', {id: exercise.id, phase_id: exercisePhase.phase.id, sortUp: false}) }}"
+                                        data-test-id="movePhaseDown"
+                                    >
+                                        <i class="fas fa-arrow-down"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="button-group footer__left">
+            <a class="button button--type-outline-primary" href="{{ path('exercise-overview', {id: exercise.course.id}) }}">
+                {{ "exercise.new.back"|trans({}, 'DegreeBase') }}
+            </a>
+            {% if is_granted('exercise_test', exercise) %}
+                <a class="button button--type-outline-primary" href="{{ path('exercise__test', {id: exercise.id}) }}">
+                    {{ "exercise.test.title"|trans({}, 'DegreeBase') }}
+                </a>
+            {% else %}
+                <a class="button button--type-outline-primary disabled">
+                    {{ "exercise.test.title"|trans({}, 'DegreeBase') }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="footer__right">
+            {{ form_row(form.save) }}
+        </div>
+    </footer>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,8 @@
+{% trans_default_domain 'UserExpiration' %}
+
+<h1>{{ 'email.title'|trans }}</h1>
+
+<p>{{ 'email.body'|trans({'deletionDate': deletionDate}) }}</p>
+<p>{{ 'email.call-to-action'|trans }} <a href="{{ url(routeName) }}">{{ 'email.link'|trans }}</a></p>
+<p>{{ 'email.ignore'|trans }}</p>
+<p>{{ 'email.no-reply-notice'|trans }}</p>

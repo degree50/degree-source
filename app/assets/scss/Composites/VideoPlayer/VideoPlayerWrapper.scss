@@ -1,0 +1,22 @@
+.video-player-wrapper {
+    padding: 20px;
+    margin: 20px;
+
+    border: 1px solid $theme__color__grey;
+}
+
+.video-player-wrapper__videos {
+}
+
+.video-player-wrapper__actions {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.video-player-wrapper__video {
+    > header {
+        text-transform: uppercase;
+    }
+}

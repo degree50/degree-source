@@ -1,0 +1,81 @@
+{% extends 'BaseFullscreen.html.twig' %}
+{% block layoutCssClass %}main--with-footer{% endblock %}
+{% block title %}{{ "course.editMembers.title"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('exercise-overview', {id: course.id}) }}">
+                        {{ course.name}}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active"
+                    aria-current="page">{{ "course.editMembers.title"|trans({}, 'DegreeBase') }}</li>
+            </ol>
+        </nav>
+
+        <header class="content-header">
+            <h3>{{ "course.editMembers.title"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <div class="searchable-select-field form-group" data-controller="searchableSelectField">
+            {{ form_label(form.users) }}
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-search"></i></div>
+                </div>
+                <input
+                    type="search"
+                    class="form-control searchable-select-field__input"
+                    aria-label="{{ "course.labels.filterStudentsAria"|trans({}, 'DegreeBase') }}"
+                    placeholder="{{ "course.labels.filterStudents"|trans({}, 'DegreeBase') }}"
+                />
+            </div>
+            {{ form_errors(form.users) }}
+            <div class="searchable-select-field__list">
+                {{ form_widget(form.users) }}
+            </div>
+            {{ form_help(form.users) }}
+        </div>
+
+        <h5>{{ "course.labels.currentStudents"|trans({}, 'DegreeBase') }} ({{ students.count }} {{ "course.labels.students"|trans({}, 'DegreeBase') }})</h5>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>{{ "course.labels.student"|trans({}, 'DegreeBase') }}</th>
+                <th>{{ "course.labels.role"|trans({}, 'DegreeBase') }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.user.userName }}</td>
+                    <td>{{ "course.labels.student"|trans({}, 'DegreeBase') }} {% if student.name == 'DOZENT' %}({{ "course.editMembers.canCreate"|trans({}, 'DegreeBase') }}){% endif %}</td>
+                    <td class="text-right">
+                        {% if student.name == 'STUDENT' %}
+                            <a href="{{ path('exercise-overview__course--upgrade-role', {id: course.id, userRole_id: student.id}) }}"
+                               class="button button--type-outline-primary button--size-small">{{ "course.upgradeMember.title"|trans({}, 'DegreeBase') }}</a>
+                        {% else %}
+                            <a href="{{ path('exercise-overview__course--downgrade-role', {id: course.id, userRole_id: student.id}) }}"
+                               class="button button--type-outline-primary button--size-small">{{ "course.downgradeMember.title"|trans({}, 'DegreeBase') }}</a>
+                        {% endif %}
+                        <a href="{{ path('exercise-overview__course--remove-role', {id: course.id, userRole_id: student.id}) }}"
+                           class="button button--type-danger button--size-small">{{ "course.removeMember.title"|trans({}, 'DegreeBase') }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <footer class="footer">
+        <a class="button button--type-outline-primary"
+           href="{{ path('exercise-overview', {id: course.id}) }}">{{ "course.new.back"|trans({}, 'DegreeBase') }}</a>
+        {{ form_row(form.save) }}
+    </footer>
+    {{ form_end(form) }}
+{% endblock %}

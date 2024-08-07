@@ -1,0 +1,29 @@
+.schreibtisch {
+    .sidebar__group + .sidebar__group {
+        margin-top: $theme__spacing--base;
+    }
+}
+
+.schreibtisch-filters {
+    header {
+        padding: $theme__spacing--base;
+        background: $theme__color__primary;
+        color: $theme__color__white;
+
+        > * + * {
+            margin-left: $theme__spacing--small;
+        }
+    }
+
+    main {
+        padding: $theme__spacing--base;
+    }
+}
+
+.schreibtisch-filter {
+    padding: $theme__spacing--small;
+
+    &__label {
+        font-weight: bold;
+    }
+}

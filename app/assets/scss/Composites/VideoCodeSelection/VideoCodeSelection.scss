@@ -1,0 +1,42 @@
+.video-code-select {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    margin-bottom: 0;
+    padding-left: 0;
+    max-height: 150px;
+
+    overflow: auto;
+
+    list-style: none;
+
+    .video-code-select__option {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding-left: $theme__spacing--small;
+        gap: $theme__spacing--base;
+
+        text-align: center;
+
+        &.child-prototype {
+            margin-left: 27px;
+        }
+
+        &:focus-within {
+            outline: 2px solid $theme__color__grey--dark;
+            outline-offset: 2px;
+        }
+
+        // Prototype label
+        & > label {
+            display: flex;
+            align-items: center;
+            gap: $theme__spacing--small;
+        }
+    }
+
+    .video-code-select__option__lock-spacer {
+        width: 17px;
+    }
+}

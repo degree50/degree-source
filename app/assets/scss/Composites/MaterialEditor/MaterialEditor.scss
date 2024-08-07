@@ -1,0 +1,30 @@
+.material-editor {
+    display: grid;
+    grid-template-rows: 1fr 40px;
+
+    height: 100%;
+
+    .ck-editor {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+            'header'
+            'main';
+
+        overflow-y: hidden;
+
+        .ck-editor__top {
+            grid-area: header;
+        }
+
+        .ck-editor__main {
+            grid-area: main;
+
+            overflow: hidden;
+
+            .ck-editor__editable {
+                height: 100%;
+            }
+        }
+    }
+}

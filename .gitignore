@@ -1,0 +1,38 @@
+/.env
+/docker-compose.override.yaml
+/docker-compose.override.yml
+/app/public/uploads/videos
+supervisord.log
+supervisord.pid
+/app/updates.db
+
+# IDE
+.vscode
+
+node_modules
+/video-poc/dist/
+/video-poc/.cache
+
+# Optional npm cache directory
+.npm
+
+# https://github.com/github/gitignore/blob/master/Global/Vim.gitignore
+# ======================================================================================================================
+# swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+
+# OS
+.DS_Store
+
+# test results
+e2e-results/
+e2e-testrunner/**/*.png
+e2e-testrunner/**/*.zip

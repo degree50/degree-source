@@ -1,0 +1,20 @@
+.schreibtisch-container {
+    height: 100%;
+    width: 100%;
+}
+.schreibtisch {
+    height: 100%;
+
+    & > main {
+        padding: $theme__spacing--large;
+        margin-left: 300px;
+        height: 100%;
+        overflow: auto;
+    }
+}
+
+// TODO: Why can we not use relative import?
+@import './assets/js/StimulusControllers/Schreibtisch/Navigation/Navigation';
+@import './assets/js/StimulusControllers/Schreibtisch/Aufgaben/ExerciseList/ExerciseList';
+@import './assets/js/StimulusControllers/Schreibtisch/MaterialEditor/MaterialEditorScreen';
+@import './assets/js/StimulusControllers/Schreibtisch/Filter/SchreibtischFilter';

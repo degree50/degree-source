@@ -1,0 +1,22 @@
+.login-form,
+.registration-form {
+    margin: auto;
+    max-width: 500px;
+
+    &__headline {
+        text-align: center;
+    }
+
+    img {
+        margin-bottom: 20px;
+    }
+
+    label.required:before {
+        content: '';
+    }
+
+    &__register {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -1,0 +1,142 @@
+$sidebar__width: 300px;
+$sidebar__width--without-padding: $sidebar__width - 20px;
+
+.sidebar {
+    position: absolute;
+    left: 0;
+    width: $sidebar__width;
+    height: 100%;
+
+    background-color: $theme__color__grey--lighter;
+
+    @include transition(left 250ms ease);
+
+    &--is-closed {
+        left: -$sidebar__width--without-padding;
+
+        .sidebar__toggle i {
+            transform: rotate(180deg);
+        }
+
+        ~ .content-with-sidebar {
+            padding-left: 40px;
+        }
+    }
+}
+
+.main--no-padding {
+    .sidebar--is-closed {
+        ~ .content-with-sidebar {
+            padding-left: 20px;
+        }
+    }
+
+    .content-with-sidebar {
+        padding-left: $sidebar__width;
+    }
+}
+
+.sidebar__content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    padding-right: 30px;
+
+    overflow: hidden;
+    overflow-y: auto;
+
+    .card-header {
+        .button {
+            text-align: left;
+        }
+    }
+}
+
+.sidebar__toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 20px;
+
+    border-left: 1px solid $theme__color__white;
+
+    button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 5px;
+
+        border: 0;
+        border-right: 1px solid $theme__color__white;
+
+        color: $theme__color__primary;
+
+        @include transition(all 250ms ease);
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: $theme__color__primary--dark;
+            color: $theme__color__white;
+        }
+    }
+
+    i {
+        @include transition(transform 250ms ease);
+    }
+}
+
+.sidebar__group-toggle {
+    justify-content: space-between;
+    width: 100%;
+    padding: $theme__spacing--base;
+
+    .fa-chevron-down {
+        display: none;
+    }
+
+    &.collapsed {
+        .fa-chevron-down {
+            display: inline-block;
+        }
+
+        .fa-chevron-up {
+            display: none;
+        }
+    }
+}
+
+.sidebar__group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    background-color: $theme__color__white;
+    background-clip: border-box;
+    border: 1px solid $theme__color__grey--light;
+
+    word-wrap: break-word;
+
+    p {
+        margin: 0;
+    }
+
+    > header {
+        h5 {
+            padding: $theme__spacing--base;
+            margin-bottom: 0;
+
+            font-size: $base__fontSize !important;
+            font-weight: $theme__bold__fontWeight;
+        }
+    }
+}
+
+.sidebar__group-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+}

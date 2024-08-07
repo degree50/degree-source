@@ -1,0 +1,32 @@
+{% extends 'BaseWithSidebar.html.twig' %}
+
+{% block title %}{{ exercise.name }} - {{ "exercisePhase.showSolutions.title"|trans({}, 'DegreeBase') }}{% endblock %}
+
+{% block layoutCssClass %}main--without-scrollbar main--no-padding{% endblock %}
+
+{% block sidebar %}
+    {{ include('Exercise/PhasesSidebar.html.twig', {sidebarItems: phases, currentItemId: currentExercisePhase.id, showSolution: true, testMode: false}) }}
+{% endblock %}
+
+{% block body %}
+    <div class="solution-app">
+        <header class="content-header content-header--center">
+            <h3>{{ exercise.name }} - {{ "exercisePhase.showSolutions.title"|trans({}, 'DegreeBase') }}</h3>
+        </header>
+        {% if currentExercisePhase.type.value == 'reflexion' %}
+            <div class="exercise-phase exercise-phase--no-solutions">
+                <h5>{{ "exercisePhase.showSolutions.phaseHasNoSolutions"|trans({}, 'DegreeBase') }}</h5>
+            </div>
+        {% elseif hasSolutions == false %}
+            <div class="exercise-phase exercise-phase--no-solutions">
+                <h5>{{ "exercisePhase.showSolutions.noSolutions"|trans({}, 'DegreeBase') }}</h5>
+            </div>
+        {% else %}
+            <div class="exercise-phase" data-controller="solutions" data-solutions-props="{{ {data: data, config: config} |json_encode|e('html_attr') }}">
+                <div class="loading-screen">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
