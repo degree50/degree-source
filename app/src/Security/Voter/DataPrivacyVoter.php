@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class DataPrivacyVoter extends Voter
 {
     const string ACCEPTED = 'data-privacy-accepted';
-    // TODO: This must be configurable via env
     const int DATA_PRIVACY_VERSION = 3;
 
     public function supports($attribute, $subject): bool

@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class TermsOfUseVoter extends Voter
 {
     const string ACCEPTED = 'terms-of-use-accepted';
-    // TODO: This must be configurable via env
     const int TERMS_OF_USE_VERSION = 3;
 
     public function supports($attribute, $subject): bool

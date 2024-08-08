@@ -209,7 +209,7 @@ const drawCursor = (
 const getAdjustmentFactorForGrid = (gridGap: number, gridNum: number, canvasWidth: number) => {
     const defaultFactor = 1
 
-    // TODO add WHY comment (preferably from Michael Berhorst)
+    // TODO add WHY comment
     const targetGridGap = canvasWidth / 10
     const fromTargetGridGap =
         gridGap <= 10 && canvasWidth > 0
