@@ -29,7 +29,11 @@ services:
 
             # configured in ./.env
             APP_SECRET: "${APP_SECRET}"
-            DATABASE_URL: "mysql://degree:${MYSQL_PASSWORD}@db/degree"
+            # WHY:
+            #   We use a different name for this variable here to be able to override it via .env.test
+            #   Because if we use DATABASE_URL here, the variable from docker compose would override the variable
+            #   in .env.test.
+            DATABASE_URL_FROM_COMPOSE: "mysql://degree:${MYSQL_PASSWORD}@db/degree"
             MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
             LIVE_SYNC_JWT_PRIVATE_SIGNING_KEY: "${JWT_KEY}"
             JWT_KEY: "${JWT_KEY}"

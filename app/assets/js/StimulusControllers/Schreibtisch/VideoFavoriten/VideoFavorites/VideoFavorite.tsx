@@ -47,20 +47,24 @@ const VideoFavorite = (props: Props) => {
                     <i className="fas fa-star"></i>
                 </button>
                 {video.userIsCreator ? (
-                    <button className="button button--type-link" title="Aktionen aus/einblenden">
-                        <i className="fas fa-ellipsis-v"></i>
-                        <div className="overview-item__actions-dropdown">
-                            <a href={`/video/play/${video.id}`}>
-                                <i className="fas fa-play"></i> Video anschauen
-                            </a>
-                            <a href={`/video/edit/${video.id}`}>
-                                <i className="fas fa-pencil-alt"></i> Video bearbeiten
-                            </a>
-                            <a href={`/video/delete/${video.id}`} className="color-alert">
-                                <i className="fas fa-trash-alt"></i> Video löschen
-                            </a>
-                        </div>
-                    </button>
+                    <div className="overview-item__actions" data-controller="overviewItemDropdown">
+                        <button className="button button--type-link dialog-toggle" title="Aktionen aus/einblenden">
+                            <i className="fas fa-ellipsis-v"></i>
+                        </button>
+                        <dialog className="overview-item__actions-dropdown">
+                            <div>
+                                <a href={`/video/play/${video.id}`}>
+                                    <i className="fas fa-play"></i> Video anschauen
+                                </a>
+                                <a href={`/video/edit/${video.id}`}>
+                                    <i className="fas fa-pencil-alt"></i> Video bearbeiten
+                                </a>
+                                <a href={`/video/delete/${video.id}`} className="color-alert">
+                                    <i className="fas fa-trash-alt"></i> Video löschen
+                                </a>
+                            </div>
+                        </dialog>
+                    </div>
                 ) : null}
             </div>
         </div>

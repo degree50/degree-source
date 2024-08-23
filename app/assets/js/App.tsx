@@ -26,21 +26,17 @@ import { initColors, ORIGINAL_COLORS } from 'ntc-ts'
 import CKEditorController from 'StimulusControllers/CkeditorController'
 import SchreibtischController from 'StimulusControllers/Schreibtisch/SchreibtischController'
 import SearchableSelectFieldController from 'StimulusControllers/SearchableSelectFieldController'
+import OverviewItemDropdownController from 'StimulusControllers/OverviewItemDropdownController'
 
 const application = Application.start()
 
 // This is a workaround for safari to focus the button when it is clicked.
-// Safari does not support focus on buttons by default.
-// We need the focus state at some points to show additional content.
-const buttons = document.querySelectorAll('button')
-for (let i = 0; i <= buttons.length - 1; i++) {
-    ;(function (index) {
-        const button = buttons[index]
-        button.addEventListener('click', function () {
-            button.focus()
-        })
-    })(i)
-}
+// Safari does not set focus on buttons when clicked by default.
+document.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('click', function () {
+        button.focus()
+    })
+})
 
 application.register('videoUpload', VideoUploadController)
 application.register('subtitleUpload', SubtitlesUploadController)
@@ -56,6 +52,7 @@ application.register('deleteEntity', DeleteEntityController)
 application.register('sidebar', SidebarController)
 application.register('schreibtisch', SchreibtischController)
 application.register('searchableSelectField', SearchableSelectFieldController)
+application.register('overviewItemDropdown', OverviewItemDropdownController)
 
 /**
  * Initialize color map for ntc (color hex -> color name conversion) with default colors (browser standard).

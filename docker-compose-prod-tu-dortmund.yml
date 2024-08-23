@@ -47,7 +47,7 @@ services:
 
             # configured in ./.env
             APP_SECRET: "${APP_SECRET}"
-            DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}"
+            DATABASE_URL_FROM_COMPOSE: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}"
             LIVE_SYNC_JWT_PRIVATE_SIGNING_KEY: "${JWT_KEY}"
             JWT_KEY: "${JWT_KEY}"
             MAILER_DSN: "${MAILER_DSN}"

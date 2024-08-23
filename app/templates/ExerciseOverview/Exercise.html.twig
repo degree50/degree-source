@@ -1,7 +1,7 @@
 {% if is_granted('exercise_edit', exercise.exercise) %}
     {% set statusTransVar = 'exercise.labels.status' ~ (exercise.exercise.status) %}
     {% set statusClassVar = 'overview-item--status-' ~ (exercise.exercise.status) %}
-    <li tabindex="0" class="overview-item {{ statusClassVar }}">
+    <li class="overview-item {{ statusClassVar }}">
         <div class="overview-item__date">
             <span class="sr-only">{{ "exercise.labels.createdLabel"|trans({}, 'DegreeBase') }}: </span>
             {{ exercise.exercise.createdAt|date("d.m.Y") }}
@@ -26,13 +26,19 @@
                 </div>
             {% endif %}
         </div>
-        <div class="overview-item__actions" aria-label="{{ "exercise.labels.actionsLabel"|trans({}, 'DegreeBase') }}">
+        <div
+            class="overview-item__actions"
+            data-controller="overviewItemDropdown"
+            aria-label="{{ "exercise.labels.actionsLabel"|trans({}, 'DegreeBase') }}"
+        >
             <button
-                class="button button--type-link"
+                class="button button--type-link dialog-toggle"
                 aria-label="{{ "exercise.labels.toggleActions"|trans({}, 'DegreeBase') }}"
             >
                 <i class="fas fa-ellipsis-v"></i>
-                <div class="overview-item__actions-dropdown">
+            </button>
+            <dialog class="overview-item__actions-dropdown">
+                <div>
                     {% if is_granted('exercise_showSolution', exercise.exercise) %}
                         <a href="{{ path('exercise__show-solutions', {id: exercise.exercise.id}) }}">
                             <i class="fas fa-clipboard-check"></i> {{ "exercise.showSolution.title"|trans({}, 'DegreeBase') }}
@@ -64,7 +70,7 @@
                         </a>
                     {% endif %}
                 </div>
-            </button>
+            </dialog>
         </div>
     </li>
 {% else %}

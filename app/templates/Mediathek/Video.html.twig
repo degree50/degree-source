@@ -75,14 +75,20 @@
         <span class="sr-only">{{ "video.labels.titleLabel"|trans({}, 'DegreeBase') }}: </span> {{ videoDto.video.title }}
     </a>
     {% if is_granted('video_edit', videoDto.video) %}
-        <div class="overview-item__actions" aria-label="{{ "video.labels.actionsLabel"|trans({}, 'DegreeBase') }}">
+        <div
+            class="overview-item__actions"
+            data-controller="overviewItemDropdown"
+            aria-label="{{ "video.labels.actionsLabel"|trans({}, 'DegreeBase') }}"
+        >
             {% if app.user.isStudent %}
                 {{ _self.favorButton(videoDto) }}
             {% endif %}
-            <button class="button button--type-link"
+            <button class="button button--type-link dialog-toggle"
                     aria-label="{{ "video.labels.toggleActions"|trans({}, 'DegreeBase') }}">
                 <i class="fas fa-ellipsis-v"></i>
-                <div class="overview-item__actions-dropdown">
+            </button>
+            <dialog class="overview-item__actions-dropdown">
+                <div>
                     <a href="{{ path('mediathek__video--player', {id: videoDto.video.id}) }}">
                         <i class="fas fa-play"></i> {{ "video.show.title"|trans({}, 'DegreeBase') }}
                     </a>
@@ -96,7 +102,7 @@
                         <i class="fas fa-trash-alt"></i> {{ "video.delete.title"|trans({}, 'DegreeBase') }}
                     </a>
                 </div>
-            </button>
+            </dialog>
         </div>
     {% else %}
         <div class="overview-item__actions">
