@@ -115,6 +115,9 @@ exercise:
             success: 'Aufgabe erfolgreich gelöscht!'
     copy:
         title: 'Aufgabe kopieren'
+        options:
+            copyPhases: 'Aufgabe mit Phasen kopieren'
+            addToCourse: 'Zu Kurs hinzufügen'
         message:
             success: 'Aufgabe erfolgreich kopert!'
     showPhase:
@@ -170,6 +173,7 @@ exercisePhase:
             regular: 'Wenn aktiv, können Lernende beim Bearbeiten ihr Ergebnis dieser Phase einsehen und verwenden.'
             reflexion: 'Bestimmt die Phase, welche innerhalb der Vergleichsphase begutachtet wird.'
         otherSolutionsAreAccessible: 'Wenn aktiv, können die Lernenden für diese Phase die Ergebnisse ihrer Mitlernenden einsehen.'
+        reviewRequired: 'Wenn aktiv, dann muss die Dokumentationsphase erst von einer lehrenden Person überprüft werden, bevor die Phase beendet werden kann und das Material auf dem Schreibtisch der Lernenden erscheint.'
     types:
         videoAnalysis:
             label: 'Videoanalyse'
@@ -227,6 +231,7 @@ exercisePhase:
         videoCodeColor: 'Farbe des Video-Codes'
         videoCodeName: 'Name des Video-Codes'
         addVideoCode: 'Video-Code hinzufügen'
+        reviewRequired: 'Muss von Ersteller:in überprüft werden'
         messages:
             success: 'Phase erfolgreich gespeichert!'
     delete:
